@@ -1,0 +1,48 @@
+<section class="py-5" id="resources">
+  <div class="container">
+    <span class="badge badge-bg mb-2 text-primary-accent" style="font-size: 1rem;">
+      <i class="bi bi-journal-text me-2"></i>
+      Resource Library
+    </span>
+    <h2 class="fw-bold display-5 mb-3" style="letter-spacing: -1px;">
+      Culturally-Relevant <span class="text-primary-accent">Resources</span>
+    </h2>
+    <p class="lead mb-5" style="max-width: 600px;">
+      Access curated content, expert guidance, and community resources tailored for African women's menopause journey.
+    </p>
+    <div class="row g-4 mb-4">
+      <% resources = [
+        { title: "Understanding Menopause in African Context", type: "Guide", icon: "bi-journal-text", description: "Comprehensive guide covering menopause symptoms, cultural perspectives, and traditional remedies from across Africa.", tags: ["Cultural", "Traditional Medicine", "Symptoms"], language: "English", region: "Pan-African" },
+        { title: "Managing Hot Flashes Naturally", type: "Video Series", icon: "bi-camera-video", description: "Expert-led video series featuring African herbalists and doctors discussing natural approaches to hot flash management.", tags: ["Hot Flashes", "Natural Remedies", "Expert Advice"], language: "English, Swahili", region: "East Africa" },
+        { title: "Menopause Support Groups", type: "Community", icon: "bi-people", description: "Connect with local and online support groups for women experiencing menopause across African countries.", tags: ["Support Groups", "Community", "Peer Support"], language: "Multiple", region: "Global" },
+        { title: "Nutrition During Menopause", type: "Download", icon: "bi-download", description: "Downloadable meal plans and nutrition guides featuring African superfoods for menopause wellness.", tags: ["Nutrition", "Meal Plans", "African Foods"], language: "English, French", region: "West Africa" }
+      ] %>
+      <% resources.each do |resource| %>
+        <div class="col-md-6">
+          <div class="bg-white rounded-4 shadow p-4 h-100">
+            <div class="d-flex align-items-center mb-2">
+              <span class="me-2 logo-bg rounded-circle p-2" style="font-size: 1.5rem; color: #fff;">
+                <i class="bi <%= resource[:icon] %>"></i>
+              </span>
+              <div>
+                <strong><%= resource[:title] %></strong>
+                <span class="badge badge-bg text-dark ms-2"><%= resource[:type] %></span>
+              </div>
+            </div>
+            <p class="mb-2"><%= resource[:description] %></p>
+            <div class="mb-2">
+              <% resource[:tags].each do |tag| %>
+                <span class="badge badge-bg text-primary-accent me-1"><%= tag %></span>
+              <% end %>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <span class="text-muted" style="font-size: 0.95rem;">🌍 <%= resource[:region] %></span>
+              <span class="text-muted" style="font-size: 0.95rem;">🗣️ <%= resource[:language] %></span>
+            </div>
+            <a href="#" class="btn btn-primary btn-lg fw-semibold w-100">Access Resource</a>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>

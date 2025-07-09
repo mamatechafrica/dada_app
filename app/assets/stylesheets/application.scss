@@ -1,0 +1,29 @@
+// Entry point for your Sass build
+@import "bootstrap/scss/bootstrap";
+
+// Custom color variables
+$primary-accent: #E91D63;
+$logo-bg: #ED8797;
+$button-blue: #0B5ED7;
+$card-header-bg: #F7F7F7;
+$badge-bg: #F7F7F7;
+
+// Bootstrap variable overrides (if needed)
+$primary: $primary-accent;
+$btn-primary-bg: $button-blue;
+
+// Custom utility classes
+.logo-bg {
+  background-color: $logo-bg !important;
+}
+.card-header, .badge.bg-light, .badge.bg-warning, .badge.bg-secondary {
+  background-color: $card-header-bg !important;
+  color: #222 !important;
+}
+.btn-primary, .btn.btn-primary {
+  background-color: $button-blue !important;
+  border-color: $button-blue !important;
+}
+.text-primary-accent {
+  color: $primary-accent !important;
+}
