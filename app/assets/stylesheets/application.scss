@@ -1,5 +1,5 @@
 // Entry point for your Sass build
-@import "bootstrap/scss/bootstrap";
+@use "bootstrap/scss/bootstrap";
 
 // Custom color variables
 $primary-accent: #E91D63;
