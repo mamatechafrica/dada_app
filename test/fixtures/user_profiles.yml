@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  stage: MyString
+  symptoms: MyText
+  preferences: MyText
+  region: MyString
+  language: MyString
+  completed_onboarding: false
+
+two:
+  user: two
+  stage: MyString
+  symptoms: MyText
+  preferences: MyText
+  region: MyString
+  language: MyString
+  completed_onboarding: false

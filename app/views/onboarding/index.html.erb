@@ -1,0 +1,102 @@
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow">
+        <div class="card-header bg-warning text-dark">
+          <h3 class="mb-0">Welcome to your Dada journey</h3>
+          <p class="mb-0">Let's get to know you better so we can provide personalized support</p>
+        </div>
+        <div class="card-body">
+          <%= form_with model: @user_profile, url: onboarding_path(@user_profile), local: true do |form| %>
+            <% if @user_profile.errors.any? %>
+              <div class="alert alert-danger">
+                <h4><%= pluralize(@user_profile.errors.count, "error") %> prohibited this profile from being saved:</h4>
+                <ul>
+                  <% @user_profile.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <div class="mb-4">
+              <label for="user_profile_stage" class="form-label">Where are you in your journey?</label>
+              <%= form.select :stage, 
+                  options_for_select([
+                    ['I\'m not sure yet', 'exploring'],
+                    ['Pre-menopause (regular periods)', 'pre-menopause'],
+                    ['Perimenopause (irregular periods, symptoms starting)', 'perimenopause'],
+                    ['Menopause (12+ months without periods)', 'menopause'],
+                    ['Post-menopause (several years since last period)', 'post-menopause']
+                  ], @user_profile.stage),
+                  { prompt: 'Select your stage...' },
+                  { class: 'form-select' } %>
+            </div>
+
+            <div class="mb-4">
+              <label for="user_profile_region" class="form-label">Where are you from?</label>
+              <%= form.select :region,
+                  options_for_select([
+                    ['Nigeria', 'Nigeria'],
+                    ['Kenya', 'Kenya'],
+                    ['Ghana', 'Ghana'],
+                    ['South Africa', 'South Africa'],
+                    ['Ethiopia', 'Ethiopia'],
+                    ['Uganda', 'Uganda'],
+                    ['Tanzania', 'Tanzania'],
+                    ['Other African Country', 'Other African'],
+                    ['African Diaspora', 'Diaspora']
+                  ], @user_profile.region),
+                  { prompt: 'Select your region...' },
+                  { class: 'form-select' } %>
+            </div>
+
+            <div class="mb-4">
+              <label for="user_profile_language" class="form-label">Preferred language</label>
+              <%= form.select :language,
+                  options_for_select([
+                    ['English', 'English'],
+                    ['Swahili', 'Swahili'],
+                    ['Yoruba', 'Yoruba'],
+                    ['Igbo', 'Igbo'],
+                    ['Hausa', 'Hausa'],
+                    ['Amharic', 'Amharic'],
+                    ['Other', 'Other']
+                  ], @user_profile.language),
+                  { prompt: 'Select your language...' },
+                  { class: 'form-select' } %>
+            </div>
+
+            <div class="mb-4">
+              <label for="user_profile_symptoms" class="form-label">What symptoms or changes are you experiencing? (Optional)</label>
+              <%= form.text_area :symptoms, 
+                  placeholder: "Hot flashes, mood changes, sleep issues, irregular periods...",
+                  class: 'form-control',
+                  rows: 3 %>
+              <small class="form-text text-muted">This helps us provide more relevant content and stories.</small>
+            </div>
+
+            <div class="mb-4">
+              <label for="user_profile_preferences" class="form-label">What kind of support interests you most?</label>
+              <%= form.text_area :preferences,
+                  placeholder: "Traditional remedies, modern medicine, community support, family guidance...",
+                  class: 'form-control',
+                  rows: 3 %>
+            </div>
+
+            <div class="d-flex justify-content-between">
+              <%= form.submit "Save & Continue", class: 'btn btn-warning text-dark px-4' %>
+              
+              <% if @user_profile.stage.present? && @user_profile.region.present? %>
+                <%= link_to "Complete Onboarding", onboarding_path, 
+                    method: :patch, 
+                    class: 'btn btn-success px-4',
+                    data: { confirm: 'Are you ready to start your personalized Dada experience?' } %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

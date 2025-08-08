@@ -9,7 +9,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" href="#home">Home</a>
+          <a class="nav-link" href="<%= root_path %>">Home</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#stories">Stories</a>
@@ -20,11 +20,21 @@
         <li class="nav-item">
           <a class="nav-link" href="#community">Community</a>
         </li>
-        <li class="nav-item">
-          <a class="btn btn-primary ms-lg-3" style="background:#e76f51; border:none;" href="#chat">
-            <span class="me-1">&#128172;</span> Join a Circle
-          </a>
-        </li>
+        <% if user_signed_in? %>
+          <li class="nav-item">
+            <a class="nav-link" href="<%= dashboard_path %>">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "nav-link" %>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to "Sign In", new_user_session_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Join Community", new_user_registration_path, class: "btn btn-primary ms-lg-3", style: "background:#e76f51; border:none;" %>
+          </li>
+        <% end %>
       </ul>
     </div>
   </div>
