@@ -27,3 +27,92 @@ $btn-primary-bg: $button-blue;
 .text-primary-accent {
   color: $primary-accent !important;
 }
+
+// Journey Modal Styles
+#journeyModal {
+  .modal-content {
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  }
+
+  .progress {
+    border-radius: 2px;
+    background-color: #e9ecef;
+    
+    .progress-bar {
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+  }
+
+  .form-check {
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background-color: rgba(13, 110, 253, 0.05) !important;
+      border-color: rgba(13, 110, 253, 0.3) !important;
+    }
+    
+    input[type="radio"]:checked ~ label,
+    input[type="checkbox"]:checked ~ label {
+      font-weight: 600;
+      color: $button-blue;
+    }
+  }
+
+  .input-group-lg .input-group-text {
+    font-size: 1.25rem;
+  }
+
+  .btn-link {
+    color: #6c757d;
+    text-decoration: none;
+    
+    &:hover {
+      color: $button-blue;
+      text-decoration: underline;
+    }
+  }
+
+  // Step transition animations
+  [data-onboarding-target="step"] {
+    transition: opacity 0.3s ease;
+    
+    &.d-none {
+      opacity: 0;
+    }
+    
+    &:not(.d-none) {
+      opacity: 1;
+    }
+  }
+
+  // Custom spacing for modal body
+  .modal-body {
+    min-height: 400px;
+  }
+
+  // Responsive adjustments
+  @media (max-width: 768px) {
+    .modal-dialog {
+      margin: 1rem;
+    }
+    
+    .modal-body {
+      padding: 1.5rem !important;
+    }
+    
+    .modal-footer {
+      padding: 1rem 1.5rem !important;
+    }
+    
+    .display-6 {
+      font-size: 1.75rem;
+    }
+    
+    .lead {
+      font-size: 1rem;
+    }
+  }
+}
