@@ -1,0 +1,19 @@
+current directory: /home/runner/work/dada_app/dada_app/vendor/bundle/ruby/3.2.0/gems/debug-1.11.0/ext/debug
+/usr/bin/ruby3.2 -I/usr/lib/ruby/vendor_ruby extconf.rb
+creating Makefile
+
+current directory: /home/runner/work/dada_app/dada_app/vendor/bundle/ruby/3.2.0/gems/debug-1.11.0/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20250808-3296-ssze6m sitelibdir\=./.gem.20250808-3296-ssze6m clean
+
+current directory: /home/runner/work/dada_app/dada_app/vendor/bundle/ruby/3.2.0/gems/debug-1.11.0/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20250808-3296-ssze6m sitelibdir\=./.gem.20250808-3296-ssze6m
+compiling debug.c
+compiling iseq_collector.c
+linking shared-object debug/debug.so
+
+current directory: /home/runner/work/dada_app/dada_app/vendor/bundle/ruby/3.2.0/gems/debug-1.11.0/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20250808-3296-ssze6m sitelibdir\=./.gem.20250808-3296-ssze6m install
+/usr/bin/install -c -m 0755 debug.so ./.gem.20250808-3296-ssze6m/debug
+
+current directory: /home/runner/work/dada_app/dada_app/vendor/bundle/ruby/3.2.0/gems/debug-1.11.0/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20250808-3296-ssze6m sitelibdir\=./.gem.20250808-3296-ssze6m clean
