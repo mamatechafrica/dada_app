@@ -1,376 +1,196 @@
-<!-- Onboarding Modal -->
+<!-- Start Your Journey Modal -->
 <div class="modal fade" id="onboardingModal" tabindex="-1" aria-labelledby="onboardingModalLabel" aria-hidden="true" 
      data-controller="onboarding" data-onboarding-target="modal">
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header border-0 pb-0">
-        <div class="w-100">
-          <!-- Progress Bar -->
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <h5 class="modal-title" id="onboardingModalLabel">Welcome to Dada</h5>
-            <span class="text-muted small" data-onboarding-target="stepCounter">1 of 6</span>
-          </div>
-          <div class="progress" style="height: 6px;">
-            <div class="progress-bar bg-primary" role="progressbar" 
-                 data-onboarding-target="progressBar" 
-                 style="width: 16.67%" 
-                 aria-valuenow="16.67" 
-                 aria-valuemin="0" 
-                 aria-valuemax="100"></div>
-          </div>
-        </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      
-      <div class="modal-body px-4 py-4">
-        <!-- Step 1: Welcome -->
-        <div data-onboarding-target="step" class="">
-          <div class="text-center mb-4">
-            <span class="fs-1 mb-3 d-block">🌺</span>
-            <h3 class="fw-bold mb-3">Welcome to Your <span class="text-primary-accent">Menopause Journey</span></h3>
-            <p class="lead text-secondary">
-              Dada is here to support you through midlife with culturally-aware guidance, 
-              personalized insights, and a community that understands your experience.
-            </p>
+      <div class="modal-body px-5 py-4">
+        <!-- Progress Indicator -->
+        <div class="mb-4">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <small class="text-muted">Step <span data-onboarding-target="stepCounter">1 of 5</span></small>
+            <small class="text-muted fw-light">✨ You're doing something kind for yourself today</small>
           </div>
-          <div class="row g-3">
-            <div class="col-md-4 text-center">
-              <div class="p-3 bg-light rounded">
-                <span class="fs-4 d-block mb-2">🤖</span>
-                <h6 class="fw-semibold">AI-Powered Support</h6>
-                <small class="text-muted">Get personalized guidance</small>
-              </div>
-            </div>
-            <div class="col-md-4 text-center">
-              <div class="p-3 bg-light rounded">
-                <span class="fs-4 d-block mb-2">🌍</span>
-                <h6 class="fw-semibold">Cultural Awareness</h6>
-                <small class="text-muted">Rooted in African wisdom</small>
-              </div>
-            </div>
-            <div class="col-md-4 text-center">
-              <div class="p-3 bg-light rounded">
-                <span class="fs-4 d-block mb-2">👥</span>
-                <h6 class="fw-semibold">Sister Community</h6>
-                <small class="text-muted">Connect with other women</small>
-              </div>
-            </div>
+          <div class="progress" style="height: 4px;">
+            <div class="progress-bar bg-primary" role="progressbar" style="width: 20%;" 
+                 aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" data-onboarding-target="progressBar"></div>
           </div>
         </div>
 
-        <!-- Step 2: Personal Information -->
-        <div data-onboarding-target="step" class="d-none">
-          <div class="text-center mb-4">
-            <span class="fs-1 mb-3 d-block">👤</span>
-            <h3 class="fw-bold mb-3">Tell Us About <span class="text-primary-accent">Yourself</span></h3>
-            <p class="text-secondary">
-              Help us personalize your experience by sharing some basic information.
-            </p>
-          </div>
-          <div class="row g-3">
-            <div class="col-md-6">
-              <label for="age-range" class="form-label fw-semibold">Age Range</label>
-              <select class="form-select" id="age-range">
-                <option value="">Choose your age range</option>
-                <option value="35-40">35-40 years</option>
-                <option value="41-45">41-45 years</option>
-                <option value="46-50">46-50 years</option>
-                <option value="51-55">51-55 years</option>
-                <option value="56-60">56-60 years</option>
-                <option value="60+">60+ years</option>
-              </select>
-            </div>
-            <div class="col-md-6">
-              <label for="location" class="form-label fw-semibold">Location</label>
-              <select class="form-select" id="location">
-                <option value="">Select your location</option>
-                <option value="nigeria">Nigeria</option>
-                <option value="kenya">Kenya</option>
-                <option value="ghana">Ghana</option>
-                <option value="south-africa">South Africa</option>
-                <option value="uganda">Uganda</option>
-                <option value="diaspora-us">Diaspora - United States</option>
-                <option value="diaspora-uk">Diaspora - United Kingdom</option>
-                <option value="diaspora-canada">Diaspora - Canada</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-            <div class="col-12">
-              <label for="menopause-stage" class="form-label fw-semibold">Where are you in your menopause journey?</label>
-              <div class="row g-2">
-                <div class="col-md-4">
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="menopause-stage" id="premenopause" value="premenopause">
-                    <label class="form-check-label" for="premenopause">
-                      <strong>Pre-menopause</strong><br>
-                      <small class="text-muted">Regular periods, some changes</small>
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="menopause-stage" id="perimenopause" value="perimenopause">
-                    <label class="form-check-label" for="perimenopause">
-                      <strong>Perimenopause</strong><br>
-                      <small class="text-muted">Irregular periods, symptoms</small>
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="menopause-stage" id="postmenopause" value="postmenopause">
-                    <label class="form-check-label" for="postmenopause">
-                      <strong>Post-menopause</strong><br>
-                      <small class="text-muted">No periods for 12+ months</small>
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <!-- Step 1: Welcome & Stage -->
+        <div data-onboarding-target="step" class="text-center">
+          <h2 class="display-6 fw-bold mb-3">✨ Start Your Journey</h2>
+          <p class="lead text-secondary mb-4">Every journey through menopause is different. Tell us where you are — we'll meet you there.</p>
+          <div class="d-grid">
+            <button class="btn btn-primary btn-lg px-5" data-action="click->onboarding#next">Start Now</button>
           </div>
         </div>
 
-        <!-- Step 3: Symptoms & Concerns -->
+        <!-- Step 2: Menopause Stage -->
         <div data-onboarding-target="step" class="d-none">
-          <div class="text-center mb-4">
-            <span class="fs-1 mb-3 d-block">🩺</span>
-            <h3 class="fw-bold mb-3">Your <span class="text-primary-accent">Symptoms & Concerns</span></h3>
-            <p class="text-secondary">
-              Select the symptoms you're experiencing. This helps us provide relevant support.
-            </p>
+          <h2 class="display-6 fw-bold mb-3">🧭 Where are you in your menopause journey?</h2>
+          <p class="lead text-secondary mb-4">This helps us show you the most relevant content and community.</p>
+          
+          <div class="mb-4">
+            <div class="form-check mb-3 p-3 rounded border bg-light">
+              <input class="form-check-input" type="radio" name="menopause_stage" id="perimenopause" value="perimenopause">
+              <label class="form-check-label fs-5" for="perimenopause">
+                I think I'm in <strong>perimenopause</strong>
+              </label>
+            </div>
+            <div class="form-check mb-3 p-3 rounded border bg-light">
+              <input class="form-check-input" type="radio" name="menopause_stage" id="menopause" value="menopause">
+              <label class="form-check-label fs-5" for="menopause">
+                I'm currently in <strong>menopause</strong>
+              </label>
+            </div>
+            <div class="form-check mb-3 p-3 rounded border bg-light">
+              <input class="form-check-input" type="radio" name="menopause_stage" id="post-menopause" value="post-menopause">
+              <label class="form-check-label fs-5" for="post-menopause">
+                I'm <strong>post-menopause</strong>
+              </label>
+            </div>
+            <div class="form-check mb-3 p-3 rounded border bg-light">
+              <input class="form-check-input" type="radio" name="menopause_stage" id="not-sure" value="exploring">
+              <label class="form-check-label fs-5" for="not-sure">
+                Honestly, <strong>I'm not sure</strong>
+              </label>
+            </div>
           </div>
-          <div class="row g-3">
+          
+          <p class="text-muted small mb-4">💝 There's no "right" answer. Just your truth.</p>
+        </div>
+
+        <!-- Step 3: Symptoms -->
+        <div data-onboarding-target="step" class="d-none">
+          <h2 class="display-6 fw-bold mb-3">🩺 What symptoms are showing up for you?</h2>
+          <p class="lead text-secondary mb-4">Choose all that apply. You can skip this if you're not ready.</p>
+          
+          <div class="row mb-4">
             <div class="col-md-6">
-              <h6 class="fw-semibold mb-3">Physical Symptoms</h6>
-              <div class="d-flex flex-wrap gap-2">
-                <input type="checkbox" class="btn-check" id="hot-flashes" autocomplete="off">
-                <label class="btn btn-outline-secondary btn-sm" for="hot-flashes">Hot Flashes</label>
-                
-                <input type="checkbox" class="btn-check" id="night-sweats" autocomplete="off">
-                <label class="btn btn-outline-secondary btn-sm" for="night-sweats">Night Sweats</label>
-                
-                <input type="checkbox" class="btn-check" id="irregular-periods" autocomplete="off">
-                <label class="btn btn-outline-secondary btn-sm" for="irregular-periods">Irregular Periods</label>
-                
-                <input type="checkbox" class="btn-check" id="sleep-issues" autocomplete="off">
-                <label class="btn btn-outline-secondary btn-sm" for="sleep-issues">Sleep Issues</label>
-                
-                <input type="checkbox" class="btn-check" id="weight-changes" autocomplete="off">
-                <label class="btn btn-outline-secondary btn-sm" for="weight-changes">Weight Changes</label>
-                
-                <input type="checkbox" class="btn-check" id="joint-pain" autocomplete="off">
-                <label class="btn btn-outline-secondary btn-sm" for="joint-pain">Joint Pain</label>
+              <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" name="symptoms[]" value="hot_flashes" id="hot_flashes">
+                <label class="form-check-label" for="hot_flashes">Hot flashes</label>
+              </div>
+              <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" name="symptoms[]" value="trouble_sleeping" id="trouble_sleeping">
+                <label class="form-check-label" for="trouble_sleeping">Trouble sleeping</label>
+              </div>
+              <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" name="symptoms[]" value="mood_changes" id="mood_changes">
+                <label class="form-check-label" for="mood_changes">Mood changes</label>
+              </div>
+              <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" name="symptoms[]" value="anxiety" id="anxiety">
+                <label class="form-check-label" for="anxiety">Anxiety</label>
+              </div>
+              <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" name="symptoms[]" value="brain_fog" id="brain_fog">
+                <label class="form-check-label" for="brain_fog">Brain fog</label>
               </div>
             </div>
             <div class="col-md-6">
-              <h6 class="fw-semibold mb-3">Emotional & Mental</h6>
-              <div class="d-flex flex-wrap gap-2">
-                <input type="checkbox" class="btn-check" id="mood-swings" autocomplete="off">
-                <label class="btn btn-outline-secondary btn-sm" for="mood-swings">Mood Swings</label>
-                
-                <input type="checkbox" class="btn-check" id="anxiety" autocomplete="off">
-                <label class="btn btn-outline-secondary btn-sm" for="anxiety">Anxiety</label>
-                
-                <input type="checkbox" class="btn-check" id="depression" autocomplete="off">
-                <label class="btn btn-outline-secondary btn-sm" for="depression">Low Mood</label>
-                
-                <input type="checkbox" class="btn-check" id="brain-fog" autocomplete="off">
-                <label class="btn btn-outline-secondary btn-sm" for="brain-fog">Brain Fog</label>
-                
-                <input type="checkbox" class="btn-check" id="irritability" autocomplete="off">
-                <label class="btn btn-outline-secondary btn-sm" for="irritability">Irritability</label>
-                
-                <input type="checkbox" class="btn-check" id="low-energy" autocomplete="off">
-                <label class="btn btn-outline-secondary btn-sm" for="low-energy">Low Energy</label>
+              <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" name="symptoms[]" value="irregular_periods" id="irregular_periods">
+                <label class="form-check-label" for="irregular_periods">Irregular periods</label>
+              </div>
+              <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" name="symptoms[]" value="vaginal_dryness" id="vaginal_dryness">
+                <label class="form-check-label" for="vaginal_dryness">Vaginal dryness</label>
+              </div>
+              <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" name="symptoms[]" value="low_libido" id="low_libido">
+                <label class="form-check-label" for="low_libido">Low libido</label>
+              </div>
+              <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" name="symptoms[]" value="weight_changes" id="weight_changes">
+                <label class="form-check-label" for="weight_changes">Weight changes</label>
+              </div>
+              <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" name="symptoms[]" value="not_sure_symptoms" id="not_sure_symptoms">
+                <label class="form-check-label" for="not_sure_symptoms">I'm not sure</label>
               </div>
             </div>
+          </div>
+          
+          <p class="text-muted small mb-4">🌱 It's okay to not have it all figured out.</p>
+          
+          <div class="text-center mb-3">
+            <button type="button" class="btn btn-link text-decoration-none" data-action="click->onboarding#skip">
+              Skip this step
+            </button>
           </div>
         </div>
 
-        <!-- Step 4: Cultural Background & Preferences -->
+        <!-- Step 4: Location -->
         <div data-onboarding-target="step" class="d-none">
-          <div class="text-center mb-4">
-            <span class="fs-1 mb-3 d-block">🌍</span>
-            <h3 class="fw-bold mb-3">Your <span class="text-primary-accent">Cultural Context</span></h3>
-            <p class="text-secondary">
-              Help us understand your cultural background to provide more relevant guidance.
-            </p>
-          </div>
-          <div class="row g-3">
-            <div class="col-12">
-              <label for="ethnicity" class="form-label fw-semibold">Cultural/Ethnic Background</label>
-              <select class="form-select" id="ethnicity">
-                <option value="">Select your background</option>
-                <option value="yoruba">Yoruba</option>
-                <option value="igbo">Igbo</option>
-                <option value="hausa">Hausa</option>
-                <option value="kikuyu">Kikuyu</option>
-                <option value="luo">Luo</option>
-                <option value="akan">Akan</option>
-                <option value="zulu">Zulu</option>
-                <option value="xhosa">Xhosa</option>
-                <option value="east-african">East African</option>
-                <option value="west-african">West African</option>
-                <option value="southern-african">Southern African</option>
-                <option value="diaspora-mixed">Diaspora - Mixed Heritage</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-            <div class="col-md-6">
-              <label class="form-label fw-semibold">Traditional remedies interest</label>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="traditional-interest" id="very-interested" value="very-interested">
-                <label class="form-check-label" for="very-interested">Very interested</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="traditional-interest" id="somewhat-interested" value="somewhat-interested">
-                <label class="form-check-label" for="somewhat-interested">Somewhat interested</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="traditional-interest" id="not-interested" value="not-interested">
-                <label class="form-check-label" for="not-interested">Not interested</label>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <label class="form-label fw-semibold">Community support preference</label>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="community-preference" id="active-community" value="active-community">
-                <label class="form-check-label" for="active-community">Active community participation</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="community-preference" id="read-only" value="read-only">
-                <label class="form-check-label" for="read-only">Read stories, less participation</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="community-preference" id="private" value="private">
-                <label class="form-check-label" for="private">Prefer private guidance</label>
-              </div>
+          <h2 class="display-6 fw-bold mb-3">🌍 Where are you located?</h2>
+          <p class="lead text-secondary mb-4">We'll use this to recommend local resources and connect you with nearby Circles.</p>
+          
+          <div class="mb-4">
+            <div class="input-group input-group-lg">
+              <span class="input-group-text">📍</span>
+              <input type="text" class="form-control" name="location" placeholder="Enter city or ZIP code" 
+                     data-onboarding-target="locationInput">
             </div>
           </div>
+          
+          <p class="text-muted small mb-4">🤗 We're here to support you, wherever you are.</p>
         </div>
 
-        <!-- Step 5: Goals & Expectations -->
-        <div data-onboarding-target="step" class="d-none">
-          <div class="text-center mb-4">
-            <span class="fs-1 mb-3 d-block">🎯</span>
-            <h3 class="fw-bold mb-3">Your <span class="text-primary-accent">Goals & Expectations</span></h3>
-            <p class="text-secondary">
-              What do you hope to achieve with Dada? Select your main priorities.
-            </p>
-          </div>
-          <div class="row g-3">
-            <div class="col-12">
-              <h6 class="fw-semibold mb-3">What would you like help with? (Select all that apply)</h6>
-              <div class="row g-2">
-                <div class="col-md-6">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="symptom-management" value="symptom-management">
-                    <label class="form-check-label" for="symptom-management">
-                      <strong>Symptom Management</strong><br>
-                      <small class="text-muted">Natural remedies, coping strategies</small>
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="emotional-support" value="emotional-support">
-                    <label class="form-check-label" for="emotional-support">
-                      <strong>Emotional Support</strong><br>
-                      <small class="text-muted">Dealing with mood changes, anxiety</small>
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="lifestyle-guidance" value="lifestyle-guidance">
-                    <label class="form-check-label" for="lifestyle-guidance">
-                      <strong>Lifestyle Guidance</strong><br>
-                      <small class="text-muted">Diet, exercise, wellness practices</small>
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="family-relationships" value="family-relationships">
-                    <label class="form-check-label" for="family-relationships">
-                      <strong>Family Relationships</strong><br>
-                      <small class="text-muted">Talking to family, partner support</small>
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="career-balance" value="career-balance">
-                    <label class="form-check-label" for="career-balance">
-                      <strong>Career & Life Balance</strong><br>
-                      <small class="text-muted">Managing work, energy, priorities</small>
-                    </label>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="preparing-future" value="preparing-future">
-                    <label class="form-check-label" for="preparing-future">
-                      <strong>Preparing for the Future</strong><br>
-                      <small class="text-muted">Long-term health, aging gracefully</small>
-                    </label>
-                  </div>
+        <!-- Step 5: Completion -->
+        <div data-onboarding-target="step" class="d-none text-center">
+          <h2 class="display-6 fw-bold mb-3">🧡 Welcome, friend — you're not alone in this.</h2>
+          <p class="lead text-secondary mb-4">
+            <span data-onboarding-target="personalizedMessage">
+              You're navigating your unique journey, and we see you. Here's content and community made for women just like you.
+            </span>
+          </p>
+          
+          <div class="row text-start mb-4">
+            <div class="col-md-4 mb-3">
+              <div class="d-flex align-items-center">
+                <span class="fs-4 me-3">📚</span>
+                <div>
+                  <h6 class="mb-1">Your Content Bundle</h6>
+                  <small class="text-muted">Articles curated for your journey</small>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-
-        <!-- Step 6: Complete -->
-        <div data-onboarding-target="step" class="d-none">
-          <div class="text-center">
-            <span class="fs-1 mb-3 d-block">🎉</span>
-            <h3 class="fw-bold mb-3">You're All Set, <span class="text-primary-accent">Sister!</span></h3>
-            <p class="lead text-secondary mb-4">
-              Welcome to the Dada community! Your personalized menopause journey starts now.
-            </p>
-            <div class="row g-3 mb-4">
-              <div class="col-md-4">
-                <div class="p-3 bg-light rounded">
-                  <span class="fs-4 d-block mb-2 text-primary-accent">✨</span>
-                  <h6 class="fw-semibold">Personalized AI Chat</h6>
-                  <small class="text-muted">Ready to answer your questions</small>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="p-3 bg-light rounded">
-                  <span class="fs-4 d-block mb-2 text-primary-accent">📚</span>
-                  <h6 class="fw-semibold">Curated Resources</h6>
-                  <small class="text-muted">Tailored to your needs</small>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="p-3 bg-light rounded">
-                  <span class="fs-4 d-block mb-2 text-primary-accent">👭</span>
-                  <h6 class="fw-semibold">Sister Stories</h6>
-                  <small class="text-muted">Connect with your community</small>
+            <div class="col-md-4 mb-3">
+              <div class="d-flex align-items-center">
+                <span class="fs-4 me-3">🧵</span>
+                <div>
+                  <h6 class="mb-1">Join a Circle</h6>
+                  <small class="text-muted">Women nearby who get it</small>
                 </div>
               </div>
             </div>
-            <div class="alert alert-info" role="alert">
-              <strong>Pro tip:</strong> Check out the AI chat below to ask your first question, or explore the sister stories to see how other women are thriving!
+            <div class="col-md-4 mb-3">
+              <div class="d-flex align-items-center">
+                <span class="fs-4 me-3">💬</span>
+                <div>
+                  <h6 class="mb-1">Real Talk</h6>
+                  <small class="text-muted">Forum threads from others like you</small>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
       
-      <div class="modal-footer border-0 pt-0">
+      <div class="modal-footer border-0 pt-0 px-5 pb-4">
         <div class="d-flex justify-content-between w-100">
-          <button type="button" class="btn btn-outline-secondary" 
-                  data-action="click->onboarding#previous"
-                  data-onboarding-target="prevBtn">Previous</button>
-          <div class="d-flex gap-2">
-            <button type="button" class="btn btn-outline-secondary" 
-                    data-action="click->onboarding#skip">Skip</button>
-            <button type="button" class="btn btn-primary" 
-                    data-action="click->onboarding#handleNext"
-                    data-onboarding-target="nextBtn">Next</button>
-          </div>
+          <button type="button" class="btn btn-outline-secondary" data-action="click->onboarding#previous" 
+                  data-onboarding-target="prevBtn" disabled>
+            Previous
+          </button>
+          <button type="button" class="btn btn-primary px-4" data-action="click->onboarding#handleNext" 
+                  data-onboarding-target="nextBtn">
+            Next
+          </button>
         </div>
       </div>
     </div>
