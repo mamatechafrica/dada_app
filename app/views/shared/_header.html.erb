@@ -20,21 +20,22 @@
         <li class="nav-item">
           <a class="nav-link" href="#community">Community</a>
         </li>
-        <% if user_signed_in? %>
+        <!-- Temporarily disabled while fixing Devise -->
+        <%# if user_signed_in? %>
+          <!-- <li class="nav-item"> -->
+            <!-- <a class="nav-link" href="/dashboard">Dashboard</a> -->
+          <!-- </li> -->
+          <!-- <li class="nav-item"> -->
+            <!-- <a class="nav-link" href="/users/sign_out" data-method="delete">Sign Out</a> -->
+          <!-- </li> -->
+        <%# else %>
           <li class="nav-item">
-            <a class="nav-link" href="<%= dashboard_path %>">Dashboard</a>
+            <a href="#" class="nav-link">Sign In</a>
           </li>
           <li class="nav-item">
-            <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "nav-link" %>
+            <a href="#" class="btn btn-primary ms-lg-3" style="background:#e76f51; border:none;">Join Community</a>
           </li>
-        <% else %>
-          <li class="nav-item">
-            <%= link_to "Sign In", new_user_session_path, class: "nav-link" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "Join Community", new_user_registration_path, class: "btn btn-primary ms-lg-3", style: "background:#e76f51; border:none;" %>
-          </li>
-        <% end %>
+        <%# end %>
       </ul>
     </div>
   </div>

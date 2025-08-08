@@ -1,20 +1,20 @@
 Rails.application.routes.draw do
-  devise_for :users
-  
+  # devise_for :users
+
   # Public routes
   root "home#index"
   get "home/index"
-  
-  # Protected routes (require authentication)
-  authenticate :user do
-    get 'dashboard', to: 'dashboard#index'
-    
-    resources :onboarding, only: [:index, :create, :update] do
+
+    # Protected routes (require authentication)
+    # authenticate :user do
+    get "dashboard", to: "dashboard#index"
+
+    resources :onboarding, only: [ :index, :create, :update ] do
       collection do
         patch :complete
       end
     end
-  end
+  # end
 
   # Health check
   get "up" => "rails/health#show", as: :rails_health_check
