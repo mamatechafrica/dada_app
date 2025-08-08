@@ -6,14 +6,14 @@ export default class extends Controller {
 
   connect() {
     this.currentStepValue = 1
-    this.totalSteps = 4
+    this.totalSteps = 5
     this.formData = {}
     this.updateDisplay()
   }
 
   // Open the modal
   open() {
-    const modal = new bootstrap.Modal(document.getElementById('journeyModal'))
+    const modal = new bootstrap.Modal(document.getElementById('onboardingModal'))
     modal.show()
     this.currentStepValue = 1
     this.updateDisplay()
@@ -37,7 +37,7 @@ export default class extends Controller {
 
   // Skip to next step (for symptoms step)
   skip() {
-    if (this.currentStepValue === 2) { // Symptoms step (stage is step 1, symptoms is step 2)
+    if (this.currentStepValue === 3) { // Symptoms step (welcome=1, stage=2, symptoms=3)
       this.next()
     }
   }
@@ -51,7 +51,7 @@ export default class extends Controller {
     this.submitOnboarding()
     
     // Hide the modal
-    const modal = bootstrap.Modal.getInstance(document.getElementById('journeyModal'))
+    const modal = bootstrap.Modal.getInstance(document.getElementById('onboardingModal'))
     modal.hide()
     
     // Show success message or redirect to dashboard
@@ -157,7 +157,7 @@ export default class extends Controller {
         this.nextBtnTarget.classList.remove("btn-primary")
         this.nextBtnTarget.classList.add("btn-success")
         this.nextBtnTarget.style.display = 'block'
-      } else if (this.currentStepValue === 3) { // Location step
+      } else if (this.currentStepValue === 4) { // Location step
         this.nextBtnTarget.textContent = "See My Results"
         this.nextBtnTarget.classList.remove("btn-success")
         this.nextBtnTarget.classList.add("btn-primary")
