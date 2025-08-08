@@ -1,0 +1,77 @@
+<div class="container my-5">
+  <div class="row">
+    <div class="col-12">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <h1 class="display-5">Welcome back, <%= @user_profile.anonymous_name || 'Sister' %></h1>
+          <p class="lead text-muted">Your personalized Dada experience</p>
+        </div>
+        <div class="text-end">
+          <span class="badge bg-warning text-dark p-2">
+            <%= @user_profile.pathway_type.humanize %> Journey
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <!-- AI Chat Section -->
+    <div class="col-md-8">
+      <%= render 'shared/ai_chat' %>
+    </div>
+    
+    <!-- Quick Actions -->
+    <div class="col-md-4">
+      <div class="card h-100">
+        <div class="card-header bg-light">
+          <h5 class="mb-0">Quick Actions</h5>
+        </div>
+        <div class="card-body">
+          <div class="d-grid gap-2">
+            <a href="#" class="btn btn-outline-primary">Share Your Story</a>
+            <a href="#" class="btn btn-outline-secondary">Join Forum</a>
+            <a href="<%= onboarding_index_path %>" class="btn btn-outline-warning">Update Profile</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-5">
+    <div class="col-12">
+      <h3 class="mb-4">Stories for You</h3>
+      <div class="row g-4">
+        <% @personalized_stories.each_with_index do |story, index| %>
+          <% icons = ['🌺', '🦋', '🌻', '🌸', '🌿', '🌼'] %>
+          <div class="col-md-4">
+            <div class="card h-100">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                  <span class="fs-3 me-2"><%= icons[index % icons.length] %></span>
+                  <div>
+                    <h6 class="card-title mb-0"><%= story.author_name %></h6>
+                    <small class="text-muted"><%= story.author_display %></small>
+                  </div>
+                </div>
+                <p class="card-text"><%= truncate(story.content, length: 120) %></p>
+                <div class="mb-2">
+                  <% story.tags_list.take(2).each do |tag| %>
+                    <span class="badge bg-light text-dark me-1"><%= tag %></span>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Personalized Resources -->
+  <div class="row mt-5">
+    <div class="col-12">
+      <%= render 'shared/personalized_resources' %>
+    </div>
+  </div>
+</div>

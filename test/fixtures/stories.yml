@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  content: MyText
+  author_name: MyString
+  author_location: MyString
+  author_age: 1
+  stage: MyString
+  tags: MyText
+  verified: false
+  region: MyString
+
+two:
+  title: MyString
+  content: MyText
+  author_name: MyString
+  author_location: MyString
+  author_age: 1
+  stage: MyString
+  tags: MyText
+  verified: false
+  region: MyString
