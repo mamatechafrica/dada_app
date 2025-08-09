@@ -4,6 +4,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  # Include SimpleDiscussion ForumUser functionality
+  include SimpleDiscussion::ForumUser
+
   has_one :user_profile, dependent: :destroy
   
   enum :role, { guest: 'guest', member: 'member', moderator: 'moderator' }, default: 'member'
@@ -13,6 +16,9 @@ class User < ApplicationRecord
   def display_name
     user_profile&.anonymous_name || "Sister #{id}"
   end
+
+  # Required by SimpleDiscussion - alias display_name to name
+  alias_method :name, :display_name
   
   def onboarding_completed?
     user_profile&.completed_onboarding || false
