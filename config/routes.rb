@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  # devise_for :users
+  devise_for :users
+
+  # Mount simple_discussion forum
+  mount SimpleDiscussion::Engine => "/forum"
 
   # Public routes
   root "home#index"
