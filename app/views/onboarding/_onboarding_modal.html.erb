@@ -1,0 +1,86 @@
+<!-- Modal Header -->
+<div class="modal-header border-0">
+  <h5 class="modal-title" id="onboardingModalLabel">
+    <%= case @current_step
+        when 'location'
+          "Where are you located?"
+        when 'stage'
+          "Where are you in your menopause journey?"
+        when 'symptoms'
+          "What symptoms are showing up for you?"
+        when 'welcome'
+          "Welcome, friend — you're not alone in this"
+        else
+          "Getting to Know You"
+        end %>
+  </h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+
+<!-- Modal Body -->
+<div class="modal-body">
+  <% case @current_step %>
+  <% when 'location' %>
+    <%= render 'location_step' %>
+  <% when 'stage' %>
+    <%= render 'stage_step' %>
+  <% when 'symptoms' %>
+    <%= render 'symptoms_step' %>
+  <% when 'welcome' %>
+    <%= render 'welcome_step' %>
+  <% end %>
+</div>
+
+<!-- Modal Footer -->
+<div class="modal-footer border-0">
+  <% case @current_step %>
+  <% when 'location' %>
+    <%= form_with model: @user_profile, url: onboarding_update_step_path(step: 'location'), remote: true, class: 'w-100' do |form| %>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <%= form.text_field :city, placeholder: "City/Town", class: 'form-control', required: true %>
+        </div>
+        <div class="col-md-6">
+          <%= form.select :region,
+              options_for_select([
+                ['Nigeria', 'Nigeria'],
+                ['Kenya', 'Kenya'],
+                ['Ghana', 'Ghana'],
+                ['South Africa', 'South Africa'],
+                ['Ethiopia', 'Ethiopia'],
+                ['Uganda', 'Uganda'],
+                ['Tanzania', 'Tanzania'],
+                ['Other African Country', 'Other African'],
+                ['African Diaspora', 'Diaspora']
+              ], @user_profile.region),
+              { prompt: 'Select Country...' },
+              { class: 'form-select', required: true } %>
+        </div>
+      </div>
+      <%= form.submit "See My Results", class: 'btn btn-dada-primary w-100' %>
+    <% end %>
+  
+  <% when 'stage' %>
+    <%= form_with model: @user_profile, url: onboarding_update_step_path(step: 'stage'), remote: true, class: 'w-100' do |form| %>
+      <%= form.submit "Next", class: 'btn btn-dada-primary w-100' %>
+    <% end %>
+  
+  <% when 'symptoms' %>
+    <div class="d-flex justify-content-between w-100">
+      <%= link_to "Skip this step", 
+          onboarding_update_step_path(step: 'symptoms', user_profile: { symptoms: '' }), 
+          remote: true, 
+          method: :patch,
+          class: 'btn btn-outline-secondary' %>
+      
+      <%= form_with model: @user_profile, url: onboarding_update_step_path(step: 'symptoms'), remote: true do |form| %>
+        <%= form.submit "Next", class: 'btn btn-dada-primary' %>
+      <% end %>
+    </div>
+  
+  <% when 'welcome' %>
+    <%= form_with model: @user_profile, url: onboarding_update_step_path(step: 'welcome'), remote: true, class: 'w-100' do |form| %>
+      <%= form.submit "Start Exploring", class: 'btn btn-dada-primary w-100 btn-lg' %>
+    <% end %>
+  <% end %>
+</div>

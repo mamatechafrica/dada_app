@@ -1,0 +1,10 @@
+// Show the modal and load the first step
+document.getElementById('onboarding-modal-content').innerHTML = '<%= j render "onboarding_modal" %>';
+
+// Initialize the modal using Bootstrap 5 syntax
+const modalElement = document.getElementById('onboardingModal');
+const modal = new bootstrap.Modal(modalElement);
+modal.show();
+
+// Store modal instance for later use
+window.dadaOnboardingModal = modal;

@@ -1,0 +1,13 @@
+// Update the modal content with the next step
+<% if @next_step %>
+  <% @current_step = @next_step %>
+<% end %>
+
+document.getElementById('onboarding-modal-content').innerHTML = '<%= j render "onboarding_modal" %>';
+
+// Add smooth transition effect
+document.querySelector('#onboardingModal .modal-content').style.opacity = '0';
+setTimeout(function() {
+  document.querySelector('#onboardingModal .modal-content').style.transition = 'opacity 0.3s ease';
+  document.querySelector('#onboardingModal .modal-content').style.opacity = '1';
+}, 100);

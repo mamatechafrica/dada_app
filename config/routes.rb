@@ -12,9 +12,11 @@ Rails.application.routes.draw do
     # authenticate :user do
     get "dashboard", to: "dashboard#index"
 
-    resources :onboarding, only: [ :index, :create, :update ] do
+    resources :onboarding, only: [ :index, :create, :update, :show ] do
       collection do
         patch :complete
+        get :start
+        patch :update_step
       end
     end
   # end

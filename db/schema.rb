@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_09_094340) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_19_141943) do
   create_table "forum_categories", force: :cascade do |t|
     t.string "name", null: false
     t.string "slug", null: false
@@ -73,6 +73,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_09_094340) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "anonymous_name"
+    t.string "city"
     t.index ["user_id"], name: "index_user_profiles_on_user_id"
   end
 

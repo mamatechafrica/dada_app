@@ -1,7 +1,16 @@
 <div class="container my-5">
   <div class="row justify-content-center">
     <div class="col-md-8">
-      <div class="card shadow">
+      <!-- Hero Section -->
+      <div class="onboarding-hero text-center mb-5">
+        <h1 class="display-4 mb-3">Welcome to Your Dada Journey</h1>
+        <p class="lead mb-4">Let's create a personalized experience that honors your unique menopause journey and cultural background.</p>
+        
+        <a href="#" class="btn btn-primary btn-lg px-5" data-controller="onboarding" data-action="click->onboarding#open">Start Your Journey</a>
+      </div>
+
+      <!-- Fallback Form (for users with JS disabled) -->
+      <div class="card shadow d-none" id="fallback-form">
         <div class="card-header bg-warning text-dark">
           <h3 class="mb-0">Welcome to your Dada journey</h3>
           <p class="mb-0">Let's get to know you better so we can provide personalized support</p>
@@ -100,3 +109,22 @@
     </div>
   </div>
 </div>
+
+<!-- Onboarding Modal -->
+<div class="modal fade" id="onboardingModal" tabindex="-1" aria-labelledby="onboardingModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content" id="onboarding-modal-content">
+      <!-- Modal content will be loaded here via AJAX -->
+    </div>
+  </div>
+</div>
+
+<script>
+  // Fallback for users without JavaScript
+  document.addEventListener('DOMContentLoaded', function() {
+    if (typeof jQuery === 'undefined') {
+      document.getElementById('fallback-form').classList.remove('d-none');
+      document.querySelector('.onboarding-hero').style.display = 'none';
+    }
+  });
+</script>

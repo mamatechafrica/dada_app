@@ -1,0 +1,95 @@
+<div class="text-center mb-4">
+  <div class="onboarding-icon mb-3">
+    <i class="fas fa-hands-helping fa-3x text-dada-primary"></i>
+  </div>
+  <p class="lead mb-4">Welcome, <strong><%= @user_profile.anonymous_name %></strong>!</p>
+</div>
+
+<div class="progress mb-4" style="height: 6px;">
+  <div class="progress-bar bg-dada-primary" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+
+<div class="welcome-content">
+  <div class="row">
+    <div class="col-12">
+      <div class="content-bundle p-4 bg-light rounded mb-4">
+        <h5 class="mb-3">Your Personalized Content Bundle</h5>
+        
+        <% case @user_profile.stage %>
+        <% when 'perimenopause' %>
+          <div class="bundle-item d-flex align-items-center mb-3">
+            <i class="fas fa-leaf text-success me-3"></i>
+            <div>
+              <h6 class="mb-1">Mindfulness for Perimenopause</h6>
+              <small class="text-muted">Techniques to manage mood changes and anxiety</small>
+            </div>
+          </div>
+          <div class="bundle-item d-flex align-items-center mb-3">
+            <i class="fas fa-moon text-primary me-3"></i>
+            <div>
+              <h6 class="mb-1">Sleep Strategies</h6>
+              <small class="text-muted">Natural approaches to better rest</small>
+            </div>
+          </div>
+        <% when 'menopause' %>
+          <div class="bundle-item d-flex align-items-center mb-3">
+            <i class="fas fa-thermometer-half text-danger me-3"></i>
+            <div>
+              <h6 class="mb-1">Managing Hot Flashes</h6>
+              <small class="text-muted">Cooling strategies and triggers to avoid</small>
+            </div>
+          </div>
+          <div class="bundle-item d-flex align-items-center mb-3">
+            <i class="fas fa-dumbbell text-warning me-3"></i>
+            <div>
+              <h6 class="mb-1">Bone Health Guide</h6>
+              <small class="text-muted">Nutrition and exercise for strong bones</small>
+            </div>
+          </div>
+        <% when 'post-menopause' %>
+          <div class="bundle-item d-flex align-items-center mb-3">
+            <i class="fas fa-heart text-danger me-3"></i>
+            <div>
+              <h6 class="mb-1">Heart Health After Menopause</h6>
+              <small class="text-muted">Protecting your cardiovascular wellness</small>
+            </div>
+          </div>
+          <div class="bundle-item d-flex align-items-center mb-3">
+            <i class="fas fa-users text-purple me-3"></i>
+            <div>
+              <h6 class="mb-1">Wisdom Sharing Circle</h6>
+              <small class="text-muted">Connect with other post-menopausal women</small>
+            </div>
+          </div>
+        <% else %>
+          <div class="bundle-item d-flex align-items-center mb-3">
+            <i class="fas fa-compass text-info me-3"></i>
+            <div>
+              <h6 class="mb-1">Understanding Your Journey</h6>
+              <small class="text-muted">Learn about the stages of menopause</small>
+            </div>
+          </div>
+          <div class="bundle-item d-flex align-items-center mb-3">
+            <i class="fas fa-book-open text-success me-3"></i>
+            <div>
+              <h6 class="mb-1">Cultural Wisdom Collection</h6>
+              <small class="text-muted">Traditional approaches from African cultures</small>
+            </div>
+          </div>
+        <% end %>
+        
+        <div class="bundle-item d-flex align-items-center">
+          <i class="fas fa-comments text-dada-primary me-3"></i>
+          <div>
+            <h6 class="mb-1">Community Support</h6>
+            <small class="text-muted">Connect with sisters on similar journeys</small>
+          </div>
+        </div>
+      </div>
+      
+      <div class="text-center">
+        <p class="mb-0"><em>"You are not alone. Every woman who has walked this path before you is with you in spirit."</em></p>
+      </div>
+    </div>
+  </div>
+</div>

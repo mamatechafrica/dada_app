@@ -1,0 +1,58 @@
+<div class="text-center mb-4">
+  <div class="onboarding-icon mb-3">
+    <i class="fas fa-heart fa-3x text-dada-primary"></i>
+  </div>
+  <p class="lead">Understanding your symptoms helps us provide better support.</p>
+  <small class="text-muted">Select all that apply (optional)</small>
+</div>
+
+<div class="progress mb-4" style="height: 6px;">
+  <div class="progress-bar bg-dada-primary" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+
+<%= form_with model: @user_profile, url: onboarding_update_step_path(step: 'symptoms'), remote: true, id: 'symptoms-form' do |form| %>
+  <div class="symptoms-grid row">
+    <% [
+      'Hot flashes',
+      'Night sweats',
+      'Trouble sleeping',
+      'Mood changes',
+      'Irregular periods',
+      'Fatigue',
+      'Joint aches',
+      'Brain fog',
+      'Weight changes',
+      'Decreased libido',
+      'Anxiety',
+      'Depression'
+    ].each_with_index do |symptom, index| %>
+      <div class="col-md-6 mb-2">
+        <div class="form-check">
+          <input class="form-check-input symptom-checkbox" type="checkbox" value="<%= symptom %>" id="symptom_<%= index %>" name="symptoms[]">
+          <label class="form-check-label" for="symptom_<%= index %>">
+            <%= symptom %>
+          </label>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  
+  <!-- Hidden field to collect selected symptoms -->
+  <%= form.hidden_field :symptoms, id: 'selected_symptoms' %>
+<% end %>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const checkboxes = document.querySelectorAll('.symptom-checkbox');
+    const hiddenField = document.getElementById('selected_symptoms');
+    
+    checkboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', function() {
+        const selected = Array.from(checkboxes)
+          .filter(cb => cb.checked)
+          .map(cb => cb.value);
+        hiddenField.value = selected.join(', ');
+      });
+    });
+  });
+</script>

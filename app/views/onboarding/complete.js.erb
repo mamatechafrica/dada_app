@@ -1,0 +1,37 @@
+// Close the modal with celebration
+document.querySelector('#onboardingModal .modal-content').style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+document.querySelector('#onboardingModal .modal-content').style.opacity = '0';
+document.querySelector('#onboardingModal .modal-content').style.transform = 'scale(0.9)';
+
+// Show success message
+setTimeout(function() {
+  const modal = window.dadaOnboardingModal || bootstrap.Modal.getInstance(document.getElementById('onboardingModal'));
+  if (modal) {
+    modal.hide();
+  }
+  
+  // Show success toast
+  if (typeof bootstrap !== 'undefined' && bootstrap.Toast) {
+    // Create success toast
+    var toastHtml = `
+      <div class="toast align-items-center text-white bg-success border-0 position-fixed top-0 end-0 m-3" role="alert" style="z-index: 9999;">
+        <div class="d-flex">
+          <div class="toast-body">
+            <i class="fas fa-check-circle me-2"></i>
+            Welcome to your personalized Dada experience!
+          </div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+      </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', toastHtml);
+    var toast = new bootstrap.Toast(document.querySelector('.toast:last-child'));
+    toast.show();
+  }
+  
+  // Redirect to dashboard after 2 seconds
+  setTimeout(function() {
+    window.location.href = '<%= dashboard_path %>';
+  }, 2000);
+}, 500);

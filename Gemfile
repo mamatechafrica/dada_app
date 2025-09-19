@@ -62,6 +62,12 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 
   gem "hotwire-spark"
+
+  # BDD Testing Framework
+  gem "rspec-rails", "~> 6.0"
+  gem "factory_bot_rails"
+  gem "cucumber-rails", require: false
+  gem "database_cleaner-active_record"
 end
 
 group :development do
@@ -73,4 +79,9 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+  
+  # BDD Testing Support
+  gem "shoulda-matchers"
+  gem "webmock"
+  gem "vcr"
 end

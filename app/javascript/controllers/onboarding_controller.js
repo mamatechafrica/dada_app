@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import { Modal } from "bootstrap"
 
 export default class extends Controller {
   static targets = ["modal", "step", "nextBtn", "prevBtn", "progressBar", "stepCounter", "locationInput", "personalizedMessage"]
@@ -8,15 +9,46 @@ export default class extends Controller {
     this.currentStepValue = 1
     this.totalSteps = 5
     this.formData = {}
-    this.updateDisplay()
+    this.modal = null
   }
 
-  // Open the modal
-  open() {
-    const modal = new bootstrap.Modal(document.getElementById('onboardingModal'))
-    modal.show()
-    this.currentStepValue = 1
-    this.updateDisplay()
+  // Open the modal - Updated to use AJAX
+  async open(event) {
+    event.preventDefault()
+    
+    try {
+      // Fetch the initial onboarding step
+      const response = await fetch('/onboarding/start?step=location', {
+        method: 'GET',
+        headers: {
+          'Accept': 'text/javascript',
+          'X-Requested-With': 'XMLHttpRequest'
+        }
+      })
+      
+      if (response.ok) {
+        const script = await response.text()
+        // Execute the JavaScript response
+        eval(script)
+      } else {
+        console.error('Failed to load onboarding modal')
+        this.showFallbackForm()
+      }
+    } catch (error) {
+      console.error('Error opening onboarding modal:', error)
+      this.showFallbackForm()
+    }
+  }
+
+  showFallbackForm() {
+    // Show the fallback form if AJAX fails
+    const fallbackForm = document.getElementById('fallback-form')
+    const heroSection = document.querySelector('.onboarding-hero')
+    
+    if (fallbackForm && heroSection) {
+      fallbackForm.classList.remove('d-none')
+      heroSection.style.display = 'none'
+    }
   }
 
   // Navigate to next step
