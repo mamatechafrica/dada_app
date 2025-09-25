@@ -12,16 +12,16 @@ export default class extends Controller {
     this.modal = null
   }
 
-  // Open the modal - Updated to use AJAX
+  // Open the modal - Updated to specify the .js format
   async open(event) {
     event.preventDefault()
     
     try {
-      // Fetch the initial onboarding step
-      const response = await fetch('/onboarding/start?step=location', {
+      // Fetch the initial onboarding step with explicit JavaScript format
+      const response = await fetch('/onboarding/start.js?step=location', {
         method: 'GET',
         headers: {
-          'Accept': 'text/javascript',
+          'Accept': 'text/javascript', // Specify JavaScript format
           'X-Requested-With': 'XMLHttpRequest'
         }
       })

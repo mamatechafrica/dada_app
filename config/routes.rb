@@ -8,15 +8,21 @@ Rails.application.routes.draw do
   root "home#index"
   get "home/index"
 
+  # Onboarding (accessible to all visitors)
+  resources :onboarding, only: [ :index, :show ] do
+    collection do
+      get :start
+      patch :update_step
+    end
+  end
+
     # Protected routes (require authentication)
     # authenticate :user do
     get "dashboard", to: "dashboard#index"
 
-    resources :onboarding, only: [ :index, :create, :update, :show ] do
+    resources :onboarding, only: [ :create, :update ] do
       collection do
         patch :complete
-        get :start
-        patch :update_step
       end
     end
   # end

@@ -1,10 +1,18 @@
-// Show the modal and load the first step
-document.getElementById('onboarding-modal-content').innerHTML = '<%= j render "onboarding_modal" %>';
-
 // Initialize the modal using Bootstrap 5 syntax
 const modalElement = document.getElementById('onboardingModal');
-const modal = new bootstrap.Modal(modalElement);
-modal.show();
-
-// Store modal instance for later use
-window.dadaOnboardingModal = modal;
+if (modalElement) {
+  const modal = new bootstrap.Modal(modalElement);
+  modal.show();
+  
+  // Store modal instance for later use
+  window.dadaOnboardingModal = modal;
+  
+  // Initialize the onboarding controller
+  const onboardingController = application.getControllerForElementAndIdentifier(modalElement, 'onboarding');
+  if (onboardingController) {
+    onboardingController.currentStepValue = 1;
+    onboardingController.updateDisplay();
+  }
+} else {
+  console.error('Onboarding modal not found');
+}

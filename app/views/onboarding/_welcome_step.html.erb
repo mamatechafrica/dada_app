@@ -2,7 +2,7 @@
   <div class="onboarding-icon mb-3">
     <i class="fas fa-hands-helping fa-3x text-dada-primary"></i>
   </div>
-  <p class="lead mb-4">Welcome, <strong><%= @user_profile.anonymous_name %></strong>!</p>
+  <p class="lead mb-4">Welcome, <strong><%= @session_profile[:anonymous_name] || "Sister" %></strong>!</p>
 </div>
 
 <div class="progress mb-4" style="height: 6px;">
@@ -15,7 +15,8 @@
       <div class="content-bundle p-4 bg-light rounded mb-4">
         <h5 class="mb-3">Your Personalized Content Bundle</h5>
         
-        <% case @user_profile.stage %>
+        <% stage = @session_profile[:stage] || 'exploring' %>
+        <% case stage %>
         <% when 'perimenopause' %>
           <div class="bundle-item d-flex align-items-center mb-3">
             <i class="fas fa-leaf text-success me-3"></i>
@@ -87,8 +88,15 @@
         </div>
       </div>
       
+      <div class="text-center mb-4">
+        <button class="btn btn-primary btn-lg w-100" data-action="click->onboarding#handleNext">Start Now</button>
+      </div>
       <div class="text-center">
-        <p class="mb-0"><em>"You are not alone. Every woman who has walked this path before you is with you in spirit."</em></p>
+        <% if user_signed_in? %>
+          <p class="mb-0"><em>"You are not alone. Every woman who has walked this path before you is with you in spirit."</em></p>
+        <% else %>
+          <p class="mb-0"><em>"Join our community to access these personalized resources and connect with sisters on similar journeys."</em></p>
+        <% end %>
       </div>
     </div>
   </div>

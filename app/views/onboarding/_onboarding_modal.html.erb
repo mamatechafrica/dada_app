@@ -35,10 +35,10 @@
 <div class="modal-footer border-0">
   <% case @current_step %>
   <% when 'location' %>
-    <%= form_with model: @user_profile, url: onboarding_update_step_path(step: 'location'), remote: true, class: 'w-100' do |form| %>
+    <%= form_with model: OpenStruct.new, url: onboarding_update_step_path(step: 'location'), remote: true, class: 'w-100' do |form| %>
       <div class="row mb-3">
         <div class="col-md-6">
-          <%= form.text_field :city, placeholder: "City/Town", class: 'form-control', required: true %>
+          <%= form.text_field :city, placeholder: "City/Town", class: 'form-control', required: true, value: @session_profile[:city] %>
         </div>
         <div class="col-md-6">
           <%= form.select :region,
@@ -52,7 +52,7 @@
                 ['Tanzania', 'Tanzania'],
                 ['Other African Country', 'Other African'],
                 ['African Diaspora', 'Diaspora']
-              ], @user_profile.region),
+              ], @session_profile[:region]),
               { prompt: 'Select Country...' },
               { class: 'form-select', required: true } %>
         </div>
@@ -61,26 +61,31 @@
     <% end %>
   
   <% when 'stage' %>
-    <%= form_with model: @user_profile, url: onboarding_update_step_path(step: 'stage'), remote: true, class: 'w-100' do |form| %>
+    <%= form_with model: OpenStruct.new, url: onboarding_update_step_path(step: 'stage'), remote: true, class: 'w-100' do |form| %>
       <%= form.submit "Next", class: 'btn btn-dada-primary w-100' %>
     <% end %>
   
   <% when 'symptoms' %>
     <div class="d-flex justify-content-between w-100">
       <%= link_to "Skip this step", 
-          onboarding_update_step_path(step: 'symptoms', user_profile: { symptoms: '' }), 
+          onboarding_update_step_path(step: 'symptoms'), 
           remote: true, 
           method: :patch,
-          class: 'btn btn-outline-secondary' %>
+          class: 'btn btn-outline-secondary',
+          data: { params: { user_profile: { symptoms: '' } }.to_query } %>
       
-      <%= form_with model: @user_profile, url: onboarding_update_step_path(step: 'symptoms'), remote: true do |form| %>
+      <%= form_with model: OpenStruct.new, url: onboarding_update_step_path(step: 'symptoms'), remote: true do |form| %>
         <%= form.submit "Next", class: 'btn btn-dada-primary' %>
       <% end %>
     </div>
   
   <% when 'welcome' %>
-    <%= form_with model: @user_profile, url: onboarding_update_step_path(step: 'welcome'), remote: true, class: 'w-100' do |form| %>
-      <%= form.submit "Start Exploring", class: 'btn btn-dada-primary w-100 btn-lg' %>
+    <%= form_with model: (user_signed_in? ? @user_profile : OpenStruct.new), url: onboarding_update_step_path(step: 'welcome'), remote: true, class: 'w-100' do |form| %>
+      <% if user_signed_in? %>
+        <%= form.submit "Start Exploring", class: 'btn btn-dada-primary w-100 btn-lg' %>
+      <% else %>
+        <%= form.submit "Join Our Community", class: 'btn btn-dada-primary w-100 btn-lg' %>
+      <% end %>
     <% end %>
   <% end %>
 </div>

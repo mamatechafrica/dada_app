@@ -1,9 +1,12 @@
 class OnboardingController < ApplicationController
-  before_action :authenticate_user!
-  before_action :set_user_profile
+  before_action :set_user_profile, only: [:index, :create, :update, :complete]
+  before_action :set_session_profile, only: [:start, :show, :update_step]
 
   def index
-    redirect_to dashboard_path if @user_profile.completed_onboarding?
+    # Only redirect if user is authenticated and has completed onboarding
+    if user_signed_in? && @user_profile&.completed_onboarding?
+      redirect_to dashboard_path
+    end
   end
 
   def start
@@ -27,29 +30,28 @@ class OnboardingController < ApplicationController
     
     case @current_step
     when 'location'
-      @user_profile.assign_attributes(location_params)
+      @session_profile.merge!(location_params_hash)
     when 'stage'
-      @user_profile.assign_attributes(stage_params)
+      @session_profile.merge!(stage_params_hash)
     when 'symptoms'
-      @user_profile.assign_attributes(symptoms_params)
+      @session_profile.merge!(symptoms_params_hash)
     when 'welcome'
-      @user_profile.assign_attributes(completed_onboarding: true)
-      @user_profile.anonymous_name = generate_anonymous_name if @user_profile.anonymous_name.blank?
+      @session_profile[:anonymous_name] = generate_anonymous_name if @session_profile[:anonymous_name].blank?
+      # Store completed onboarding data in session for later use
+      session[:onboarding_completed] = true
     end
 
-    if @user_profile.save
-      @next_step = next_step(@current_step)
-      
+    # Store profile data in session
+    session[:onboarding_profile] = @session_profile
+
+    if @current_step == 'welcome'
       respond_to do |format|
-        if @current_step == 'welcome'
-          format.js { render 'complete' }
-        else
-          format.js { render 'show' }
-        end
+        format.js { render 'complete_preview' }
       end
     else
+      @next_step = next_step(@current_step)
       respond_to do |format|
-        format.js { render 'error' }
+        format.js { render 'show' }
       end
     end
   end
@@ -81,19 +83,35 @@ class OnboardingController < ApplicationController
   private
 
   def set_user_profile
-    @user_profile = current_user.user_profile
+    @user_profile = current_user.user_profile if user_signed_in?
+  end
+
+  def set_session_profile
+    @session_profile = session[:onboarding_profile] || {}
   end
 
   def location_params
     params.require(:user_profile).permit(:region, :city)
   end
 
+  def location_params_hash
+    location_params.to_h
+  end
+
   def stage_params
     params.require(:user_profile).permit(:stage)
   end
 
+  def stage_params_hash
+    stage_params.to_h
+  end
+
   def symptoms_params
     params.require(:user_profile).permit(:symptoms)
+  end
+
+  def symptoms_params_hash
+    symptoms_params.to_h
   end
 
   def profile_params

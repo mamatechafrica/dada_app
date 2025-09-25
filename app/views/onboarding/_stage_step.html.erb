@@ -9,7 +9,7 @@
   <div class="progress-bar bg-dada-primary" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
 </div>
 
-<%= form_with model: @user_profile, url: onboarding_update_step_path(step: 'stage'), remote: true, id: 'stage-form' do |form| %>
+<%= form_with model: OpenStruct.new, url: onboarding_update_step_path(step: 'stage'), remote: true, id: 'stage-form' do |form| %>
   <div class="stage-options">
     <% [
       ['pre-menopause', 'Pre-menopause', 'Regular periods, early 40s or younger'],
@@ -19,7 +19,10 @@
       ['exploring', 'Not sure yet', 'Still figuring out where I am']
     ].each do |value, label, description| %>
       <div class="form-check stage-option mb-3">
-        <%= form.radio_button :stage, value, class: 'form-check-input', id: "stage_#{value}" %>
+        <%= form.radio_button :stage, value, 
+            class: 'form-check-input', 
+            id: "stage_#{value}",
+            checked: (@session_profile[:stage] == value) %>
         <label class="form-check-label w-100" for="stage_<%= value %>">
           <div class="stage-card p-3 border rounded">
             <h6 class="mb-1"><%= label %></h6>

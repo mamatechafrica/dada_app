@@ -58,6 +58,10 @@ $btn-primary-bg: $button-blue;
   color: $dada-primary !important;
 }
 
+.bg-dada-primary {
+  background: linear-gradient(135deg, $dada-primary 0%, $dada-secondary 100%) !important;
+}
+
 .text-purple {
   color: $dada-primary !important;
 }
