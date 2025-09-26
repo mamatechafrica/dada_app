@@ -64,7 +64,7 @@ group :development, :test do
   gem "hotwire-spark"
 
   # BDD Testing Framework
-  gem "rspec-rails", "~> 6.0"
+  gem "rspec-rails", "~> 8.0"
   gem "factory_bot_rails"
   gem "cucumber-rails", require: false
   gem "database_cleaner-active_record"
