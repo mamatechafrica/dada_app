@@ -16,25 +16,16 @@
         </div>
       <% end %>
 
-      <div class="mb-4">
-        <%= f.label :password, class: "block text-sm font-medium text-dada-text dark:text-white" %>
-        <%= f.password_field :password, autocomplete: "new-password", placeholder: "Leave blank to keep current password", class: "mt-1 block w-full px-3 py-2 bg-white dark:bg-zinc-700 text-dada-text dark:text-white border border-gray-300 dark:border-zinc-600 rounded" %>
-        <% if @minimum_password_length %>
-          <p class="text-xs text-dada-subtle dark:text-zinc-400 mt-1">
-            <%= @minimum_password_length %> characters minimum
-          </p>
-        <% end %>
-      </div>
+      <% if @minimum_password_length %>
+        <p class="text-xs text-dada-subtle dark:text-zinc-400 mt-1">
+          <%= @minimum_password_length %> characters minimum
+        </p>
+      <% end %>
+      <%= render "devise/shared/password_field", f: f, field: :password, label_text: "Password", placeholder_text: "Leave blank to keep current password", autocomplete: "new-password" %>
 
-      <div class="mb-4">
-        <%= f.label :password_confirmation, class: "block text-sm font-medium text-dada-text dark:text-white" %>
-        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "mt-1 block w-full px-3 py-2 bg-white dark:bg-zinc-700 text-dada-text dark:text-white border border-gray-300 dark:border-zinc-600 rounded" %>
-      </div>
+      <%= render "devise/shared/password_field", f: f, field: :password_confirmation, label_text: "Password Confirmation", placeholder_text: "Confirm your password", autocomplete: "new-password" %>
 
-      <div class="mb-6">
-        <%= f.label :current_password, class: "block text-sm font-medium text-dada-text dark:text-white" %>
-        <%= f.password_field :current_password, autocomplete: "current-password", placeholder: "We need your current password to save changes", class: "mt-1 block w-full px-3 py-2 bg-white dark:bg-zinc-700 text-dada-text dark:text-white border border-gray-300 dark:border-zinc-600 rounded" %>
-      </div>
+      <%= render "devise/shared/password_field", f: f, field: :current_password, label_text: "Current Password", placeholder_text: "We need your current password to save changes", autocomplete: "current-password" %>
 
       <%= f.submit "Update Account", class: "w-full bg-dada-primary hover:bg-dada-accent text-white font-semibold py-2 rounded transition" %>
     <% end %>

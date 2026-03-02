@@ -1,4 +1,4 @@
-<header class="bg-dada-background dark:bg-dada-darkBg border-b shadow-lg sticky top-0 z-50">
+<header class="bg-white dark:bg-zinc-900 border-b shadow-lg sticky top-0 z-50">
   <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 flex h-16 items-center justify-between">
     <!-- Logo -->
     <%= link_to root_path, class: "flex items-center gap-2" do %>
@@ -7,8 +7,9 @@
 
     <!-- Desktop nav links -->
     <nav class="hidden md:flex items-center space-x-6 text-sm font-medium">
-      <%= link_to "Circles", web_circles_path, class: "text-dada-text dark:text-white hover:text-dada-primary transition" %>
-      <%= link_to "Resources", web_contents_path, class: "text-dada-text dark:text-white hover:text-dada-primary transition" %>
+      <%= link_to "Stories", "/content", class: current_page?("/content") || current_page?("/content/#{params[:id]}") ? "text-dada-primary font-bold" : "text-dada-text dark:text-white hover:text-dada-primary transition" %>
+      <%= link_to "Resources", "/resources", class: current_page?("/resources") || current_page?("/resources/#{params[:id]}") ? "text-dada-primary font-bold" : "text-dada-text dark:text-white hover:text-dada-primary transition" %>
+      <%= link_to "Circles", circles_path, class: request.path.start_with?("/circles") ? "text-dada-primary font-bold" : "text-dada-text dark:text-white hover:text-dada-primary transition" %>
     </nav>
 
     <!-- Right side controls -->
@@ -69,8 +70,9 @@
   <!-- Mobile nav panel -->
   <nav class="peer-checked:block hidden md:hidden bg-white dark:bg-dada-darkBg border-t border-gray-200 dark:border-zinc-700">
     <ul class="px-4 py-4 space-y-2 text-base font-medium">
-      <li><%= link_to "Circles", web_circles_path, class: "block py-2 text-dada-text dark:text-white hover:text-dada-primary" %></li>
-      <li><%= link_to "Resources", web_contents_path, class: "block py-2 text-dada-text dark:text-white hover:text-dada-primary" %></li>
+      <li><%= link_to "Stories", "/content", class: "block py-2 text-dada-text dark:text-white hover:text-dada-primary" %></li>
+      <li><%= link_to "Resources", "/resources", class: "block py-2 #{current_page?('/resources') ? 'text-dada-primary font-bold' : 'text-dada-text dark:text-white'} hover:text-dada-primary" %></li>
+      <li><%= link_to "Circles", circles_path, class: "block py-2 #{request.path.start_with?('/circles') ? 'text-dada-primary font-bold' : 'text-dada-text dark:text-white'} hover:text-dada-primary" %></li>
       <li><%= link_to "Dada", web_chatbot_path, class: "block py-2 text-dada-text dark:text-white hover:text-dada-primary" %></li>
       <% if user_signed_in? %>
         <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "block py-2 text-red-600 dark:text-red-400 hover:underline" %></li>

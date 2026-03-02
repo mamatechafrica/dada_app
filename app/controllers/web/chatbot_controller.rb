@@ -4,4 +4,3 @@ class Web::ChatbotController < ApplicationController
     # Any future setup (current_user, conversation fetch) can go here
   end
 end
-

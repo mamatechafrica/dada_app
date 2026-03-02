@@ -2,7 +2,7 @@ class CreateShares < ActiveRecord::Migration[6.1]
   def change
     create_table :shares do |t|
       t.references :user, null: false, foreign_key: true
-      t.string :type, null: false
+      t.string :share_type, null: false
       t.string :title
       t.text :content
       t.text :image_urls
@@ -13,7 +13,7 @@ class CreateShares < ActiveRecord::Migration[6.1]
 
       t.timestamps
     end
-    add_index :shares, :type
+    add_index :shares, :share_type
     add_index :shares, :visibility
   end
 end

@@ -6,6 +6,7 @@
   <title><%= content_for?(:title) ? yield(:title) : "Dada" %></title>
 
   <!-- Use prebuilt Tailwind CSS from app/assets/builds instead of the CDN in production -->
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
   <%= stylesheet_link_tag "tailwind", data: { turbo_track: "reload" } %>
 
   <%= csrf_meta_tags %>

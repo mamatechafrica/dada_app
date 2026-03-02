@@ -1,0 +1,70 @@
+<div class="px-40 flex flex-1 justify-center py-5 max-lg:px-4">
+  <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+    <div class="flex flex-wrap justify-between gap-3 p-4">
+      <div class="flex min-w-72 flex-col gap-3">
+        <p class="text-[#181311] dark:text-white tracking-light text-[32px] font-bold leading-tight">Resources</p>
+        <p class="text-[#886b63] dark:text-zinc-400 text-sm font-normal leading-normal">Curated content to help you navigate your journey.</p>
+      </div>
+    </div>
+    <div class="pb-3">
+      <div class="flex border-b border-[#e5dedc] dark:border-zinc-700 px-4 gap-8 overflow-x-auto">
+        <a class="flex flex-col items-center justify-center border-b-[3px] <%= @content_type == 'article' ? 'border-b-dada-primary text-dada-primary' : 'border-b-transparent text-[#886b63]' %> gap-1 pb-[7px] pt-2.5 whitespace-nowrap" href="/resources?type=article">
+          <p class="text-sm font-bold leading-normal tracking-[0.015em]">Articles</p>
+        </a>
+        <a class="flex flex-col items-center justify-center border-b-[3px] <%= @content_type == 'video' ? 'border-b-dada-primary text-dada-primary' : 'border-b-transparent text-[#886b63]' %> gap-1 pb-[7px] pt-2.5 whitespace-nowrap" href="/resources?type=video">
+          <p class="text-sm font-bold leading-normal tracking-[0.015em]">Videos</p>
+        </a>
+        <a class="flex flex-col items-center justify-center border-b-[3px] <%= @content_type == 'audio' ? 'border-b-dada-primary text-dada-primary' : 'border-b-transparent text-[#886b63]' %> gap-1 pb-[7px] pt-2.5 whitespace-nowrap" href="/resources?type=audio">
+          <p class="text-sm font-bold leading-normal tracking-[0.015em]">Audio</p>
+        </a>
+      </div>
+    </div>
+
+    <% if @resources.any? %>
+      <% @resources.each do |resource| %>
+        <div class="flex gap-4 bg-white dark:bg-zinc-800 px-4 py-3 justify-between items-center">
+          <div class="flex items-start gap-4 flex-1 min-w-0">
+            <div class="text-[#181311] dark:text-white flex items-center justify-center rounded-lg bg-[#f4f1f0] dark:bg-zinc-700 shrink-0 size-12">
+              <% case resource.content_type %>
+              <% when 'article' %>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                  <path d="M184,112a8,8,0,0,1-8,8H112a8,8,0,0,1,0-16h64A8,8,0,0,1,184,112Zm-8,24H112a8,8,0,0,0,0,16h64a8,8,0,0,0,0-16Zm48-88V208a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32H208A16,16,0,0,1,224,48Z"></path>
+                </svg>
+              <% when 'video' %>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                  <path d="M164.44,105.34l-48-32A8,8,0,0,0,104,80v64a8,8,0,0,0,12.44,6.66l48-32a8,8,0,0,0,0-13.32Z"></path>
+                </svg>
+              <% when 'audio' %>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                  <path d="M80,128V64a48,48,0,0,1,96,0v64a48,48,0,0,1-96,0Z"></path>
+                </svg>
+              <% end %>
+            </div>
+            <div class="flex flex-1 flex-col justify-center min-w-0">
+              <p class="text-[#181311] dark:text-white text-base font-medium leading-normal truncate"><%= resource.title %></p>
+              <% if resource.content.present? %>
+                <p class="text-[#886b63] dark:text-zinc-400 text-sm font-normal leading-normal line-clamp-2"><%= truncate(strip_tags(resource.content), length: 100) %></p>
+              <% end %>
+            </div>
+          </div>
+          <div class="shrink-0">
+            <a href="/resources/<%= resource.id %>" class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-8 px-4 bg-[#f4f1f0] dark:bg-zinc-700 text-[#181311] dark:text-white text-sm font-medium leading-normal w-fit hover:bg-dada-secondary transition-colors">
+              <span class="truncate">
+                <%= resource.content_type == 'article' ? 'Read' : resource.content_type == 'video' ? 'Watch' : 'Listen' %>
+              </span>
+            </a>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="flex gap-4 bg-white dark:bg-zinc-800 px-4 py-3 justify-between">
+        <div class="flex items-start gap-4 flex-1">
+          <div class="flex flex-col justify-center">
+            <p class="text-[#181311] dark:text-white text-base font-medium leading-normal">No resources yet</p>
+            <p class="text-[#886b63] dark:text-zinc-400 text-sm font-normal leading-normal">Check back soon for curated content.</p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

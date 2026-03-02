@@ -8,25 +8,14 @@
       <%= render "devise/shared/error_messages", resource: resource %>
       <%= f.hidden_field :reset_password_token %>
 
-      <div class="mb-4">
-        <%= f.label :password, "New password", class: "block text-sm font-medium text-dada-text dark:text-white" %>
-        <% if @minimum_password_length %>
-          <p class="text-xs text-dada-subtle dark:text-zinc-400 mb-1">
-            Minimum <%= @minimum_password_length %> characters
-          </p>
-        <% end %>
-        <%= f.password_field :password,
-                             autofocus: true,
-                             autocomplete: "new-password",
-                             class: "mt-1 block w-full px-3 py-2 bg-white dark:bg-zinc-700 text-dada-text dark:text-white border border-gray-300 dark:border-zinc-600 rounded" %>
-      </div>
+      <% if @minimum_password_length %>
+        <p class="text-xs text-dada-subtle dark:text-zinc-400 mb-1">
+          Minimum <%= @minimum_password_length %> characters
+        </p>
+      <% end %>
+      <%= render "devise/shared/password_field", f: f, field: :password, label_text: "New password", placeholder_text: "Enter new password", autocomplete: "new-password" %>
 
-      <div class="mb-6">
-        <%= f.label :password_confirmation, "Confirm new password", class: "block text-sm font-medium text-dada-text dark:text-white" %>
-        <%= f.password_field :password_confirmation,
-                             autocomplete: "new-password",
-                             class: "mt-1 block w-full px-3 py-2 bg-white dark:bg-zinc-700 text-dada-text dark:text-white border border-gray-300 dark:border-zinc-600 rounded" %>
-      </div>
+      <%= render "devise/shared/password_field", f: f, field: :password_confirmation, label_text: "Confirm new password", placeholder_text: "Confirm new password", autocomplete: "new-password" %>
 
       <%= f.submit "Change my password",
                    class: "w-full bg-dada-primary hover:bg-dada-accent text-white font-semibold py-2 rounded transition" %>

@@ -13,15 +13,9 @@
         <%= f.email_field :email, class: "mt-1 block w-full px-3 py-2 bg-white dark:bg-zinc-700 text-dada-text dark:text-white border border-gray-300 dark:border-zinc-600 rounded" %>
       </div>
 
-      <div class="mb-4">
-        <%= f.label :password, class: "block text-sm font-medium text-dada-text dark:text-white" %>
-        <%= f.password_field :password, class: "mt-1 block w-full px-3 py-2 bg-white dark:bg-zinc-700 text-dada-text dark:text-white border border-gray-300 dark:border-zinc-600 rounded" %>
-      </div>
+      <%= render "devise/shared/password_field", f: f, field: :password, label_text: "Password", placeholder_text: "Enter password (#{@minimum_password_length} min)", autocomplete: "new-password" %>
 
-      <div class="mb-6">
-        <%= f.label :password_confirmation, class: "block text-sm font-medium text-dada-text dark:text-white" %>
-        <%= f.password_field :password_confirmation, class: "mt-1 block w-full px-3 py-2 bg-white dark:bg-zinc-700 text-dada-text dark:text-white border border-gray-300 dark:border-zinc-600 rounded" %>
-      </div>
+      <%= render "devise/shared/password_field", f: f, field: :password_confirmation, label_text: "Password Confirmation", placeholder_text: "Confirm your password", autocomplete: "new-password" %>
 
       <%= f.submit "Create Account", class: "w-full bg-dada-primary hover:bg-dada-accent text-white font-semibold py-2 rounded" %>
     <% end %>

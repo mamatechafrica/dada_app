@@ -1,0 +1,85 @@
+<div class="max-w-6xl mx-auto px-4 py-8">
+  <h1 class="text-2xl font-bold text-dada-text dark:text-white mb-8">Moderation Dashboard</h1>
+
+  <% if @flagged_shares.any? %>
+    <div class="mb-8">
+      <h2 class="text-xl font-semibold text-red-600 mb-4">Flagged Stories (<%= @flagged_shares.count %>)</h2>
+      <div class="space-y-4">
+        <% @flagged_shares.each do |share| %>
+          <div class="bg-white dark:bg-zinc-800 p-4 rounded-lg border border-red-300">
+            <div class="flex justify-between items-start">
+              <div>
+                <h3 class="font-medium text-dada-text dark:text-white"><%= share.title || "Untitled" %></h3>
+                <p class="text-sm text-dada-subtle">By: <%= share.anonymous? ? "Anonymous" : share.user.name %></p>
+                <p class="text-sm text-dada-subtle">Reports: <%= share.reports.count %></p>
+              </div>
+              <div class="flex gap-2">
+                <%= button_to "Approve", admin_approve_share_path(share), method: :post, class: "px-3 py-1 bg-green-600 text-white rounded text-sm" %>
+                <%= button_to "Unpublish", admin_unpublish_share_path(share), method: :post, class: "px-3 py-1 bg-yellow-600 text-white rounded text-sm" %>
+                <%= button_to "Delete", admin_destroy_share_path(share), method: :post, data: { confirm: "Delete permanently?" }, class: "px-3 py-1 bg-red-600 text-white rounded text-sm" %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @pending_reports.any? %>
+    <div class="mb-8">
+      <h2 class="text-xl font-semibold text-dada-text dark:text-white mb-4">Pending Reports (<%= @pending_reports.count %>)</h2>
+      <div class="space-y-4">
+        <% @pending_reports.each do |report| %>
+          <div class="bg-white dark:bg-zinc-800 p-4 rounded-lg">
+            <div class="flex justify-between items-start">
+              <div>
+                <h3 class="font-medium text-dada-text dark:text-white"><%= report.share.title || "Untitled" %></h3>
+                <p class="text-sm text-dada-subtle">Reported by: <%= report.user.name %></p>
+                <p class="text-sm text-dada-subtle">Reason: <%= report.reason.titleize %></p>
+              </div>
+              <%= button_to "Resolve", admin_resolve_report_path(report), method: :post, class: "px-3 py-1 bg-dada-primary text-white rounded text-sm" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <div>
+    <h2 class="text-xl font-semibold text-dada-text dark:text-white mb-4">Recent Stories</h2>
+    <table class="w-full bg-white dark:bg-zinc-800 rounded-lg">
+      <thead>
+        <tr class="border-b border-gray-200 dark:border-zinc-700">
+          <th class="text-left p-4 text-dada-text dark:text-white">Title</th>
+          <th class="text-left p-4 text-dada-text dark:text-white">Author</th>
+          <th class="text-left p-4 text-dada-text dark:text-white">Status</th>
+          <th class="text-left p-4 text-dada-text dark:text-white">Reports</th>
+          <th class="text-left p-4 text-dada-text dark:text-white">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @all_shares.each do |share| %>
+          <tr class="border-b border-gray-200 dark:border-zinc-700">
+            <td class="p-4 text-dada-text dark:text-white"><%= share.title || "Untitled" %></td>
+            <td class="p-4 text-dada-text dark:text-white"><%= share.anonymous? ? "Anonymous" : share.user.name %></td>
+            <td class="p-4 text-dada-text dark:text-white">
+              <span class="px-2 py-1 rounded text-xs <%= share.status == 'published' ? 'bg-green-100 text-green-800' : share.status == 'flagged' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800' %>">
+                <%= share.status %>
+              </span>
+            </td>
+            <td class="p-4 text-dada-text dark:text-white"><%= share.reports.count %></td>
+            <td class="p-4">
+              <% if share.status != "published" %>
+                <%= button_to "Publish", admin_approve_share_path(share), method: :post, class: "text-dada-primary hover:underline mr-2" %>
+              <% end %>
+              <% if share.status != "draft" %>
+                <%= button_to "Unpublish", admin_unpublish_share_path(share), method: :post, class: "text-yellow-600 hover:underline mr-2" %>
+              <% end %>
+              <%= link_to "View", "/content/#{share.id}", class: "text-dada-primary hover:underline" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

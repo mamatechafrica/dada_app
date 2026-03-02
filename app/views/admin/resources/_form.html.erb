@@ -1,0 +1,190 @@
+<div class="max-w-4xl mx-auto px-4 py-8">
+  <h1 class="text-2xl font-bold text-gray-900 mb-8">
+    <%= @resource.persisted? ? "Edit Resource" : "New Resource" %>
+  </h1>
+
+  <%= form_with model: @resource, url: @resource.persisted? ? admin_resource_path(@resource) : admin_resources_path, local: true do |f| %>
+    <div class="grid grid-cols-3 gap-6 mb-6">
+      <!-- Title -->
+      <div class="col-span-2">
+        <%= f.label :title, class: "block text-sm font-medium text-gray-700 mb-2" %>
+        <%= f.text_field :title, class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-dada-primary focus:border-transparent", placeholder: "Resource title" %>
+      </div>
+
+      <!-- Resource Type -->
+      <div>
+        <%= f.label :resource_type, class: "block text-sm font-medium text-gray-700 mb-2" %>
+        <%= f.select :resource_type, Resource::CONTENT_TYPES, {}, class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-dada-primary focus:border-transparent" %>
+      </div>
+    </div>
+
+    <!-- Content Type Tabs -->
+    <div class="mb-6">
+      <label class="block text-sm font-medium text-gray-700 mb-2">Content Format</label>
+      <div class="flex gap-2">
+        <button type="button" onclick="showContentTab('text')" id="tab-text" class="px-4 py-2 rounded-lg border-2 border-dada-primary bg-dada-primary text-white">📝 Text</button>
+        <button type="button" onclick="showContentTab('video')" id="tab-video" class="px-4 py-2 rounded-lg border-2 border-gray-300 text-gray-600 hover:border-dada-primary">🎥 Video</button>
+        <button type="button" onclick="showContentTab('audio')" id="tab-audio" class="px-4 py-2 rounded-lg border-2 border-gray-300 text-gray-600 hover:border-dada-primary">🎵 Audio</button>
+      </div>
+    </div>
+
+    <!-- Text Content (WYSIWYG) -->
+    <div id="content-text" class="content-tab mb-6">
+      <%= f.label :content, class: "block text-sm font-medium text-gray-700 mb-2" %>
+      <div class="border border-gray-300 rounded-lg overflow-hidden">
+        <!-- Toolbar -->
+        <div class="bg-gray-50 border-b border-gray-300 p-2 flex gap-1">
+          <button type="button" onclick="formatDoc('bold')" class="p-2 hover:bg-gray-200 rounded" title="Bold"><b>B</b></button>
+          <button type="button" onclick="formatDoc('italic')" class="p-2 hover:bg-gray-200 rounded" title="Italic"><i>I</i></button>
+          <button type="button" onclick="formatDoc('underline')" class="p-2 hover:bg-gray-200 rounded" title="Underline"><u>U</u></button>
+          <span class="border-r border-gray-300 mx-1"></span>
+          <button type="button" onclick="formatDoc('insertUnorderedList')" class="p-2 hover:bg-gray-200 rounded" title="Bullet List">•</button>
+          <button type="button" onclick="formatDoc('insertOrderedList')" class="p-2 hover:bg-gray-200 rounded" title="Numbered List">1.</button>
+          <span class="border-r border-gray-300 mx-1"></span>
+          <button type="button" onclick="formatDoc('formatBlock', 'H2')" class="p-2 hover:bg-gray-200 rounded" title="Heading">H2</button>
+          <button type="button" onclick="formatDoc('formatBlock', 'H3')" class="p-2 hover:bg-gray-200 rounded" title="Subheading">H3</button>
+          <span class="border-r border-gray-300 mx-1"></span>
+          <button type="button" onclick="formatDoc('createLink')" class="p-2 hover:bg-gray-200 rounded" title="Link">🔗</button>
+        </div>
+        <!-- Editor -->
+        <div id="editor" contenteditable="true" class="w-full min-h-[300px] p-4 focus:outline-none prose max-w-none">
+          <%= @resource.content&.html_safe || "<p>Start writing your content here...</p>" %>
+        </div>
+        <%= f.hidden_field :content, id: "content-hidden" %>
+      </div>
+    </div>
+
+    <!-- Video Content -->
+    <div id="content-video" class="content-tab hidden mb-6">
+      <%= f.label :video_url, "Video URL (YouTube or Vimeo)", class: "block text-sm font-medium text-gray-700 mb-2" %>
+      <%= f.text_field :video_url, class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-dada-primary focus:border-transparent", placeholder: "https://www.youtube.com/watch?v=..." %>
+      <p class="text-sm text-gray-500 mt-1">Paste a YouTube or Vimeo URL</p>
+      
+      <div id="video-preview" class="mt-4 <%= @resource.video_url.blank? ? 'hidden' : '' %>">
+        <div class="aspect-video rounded-lg overflow-hidden bg-gray-100">
+          <iframe id="video-iframe" class="w-full h-full" src="<%= @resource.video_url&.gsub('watch?v=', 'embed/') %>" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+
+    <!-- Audio Content -->
+    <div id="content-audio" class="content-tab hidden mb-6">
+      <%= f.label :video_url, "Audio URL (SoundCloud, Spotify, or direct MP3 link)", class: "block text-sm font-medium text-gray-700 mb-2" %>
+      <%= f.text_field :video_url, class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-dada-primary focus:border-transparent", placeholder: "https://soundcloud.com/... or https://spotify.com/..." %>
+      <p class="text-sm text-gray-500 mt-1">Paste a SoundCloud, Spotify, or direct audio file URL</p>
+    </div>
+
+    <!-- Featured Image -->
+    <div class="mb-6">
+      <%= f.label :image_url, "Featured Image URL", class: "block text-sm font-medium text-gray-700 mb-2" %>
+      <%= f.text_field :image_url, class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-dada-primary focus:border-transparent", placeholder: "https://example.com/image.jpg" %>
+      <p class="text-sm text-gray-500 mt-1">Paste an image URL for the featured image</p>
+      
+      <% if @resource.image_url.present? %>
+        <div class="mt-2 w-48 h-32 bg-gray-100 rounded-lg overflow-hidden">
+          <img src="<%= @resource.image_url %>" alt="Featured" class="w-full h-full object-cover">
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Settings -->
+    <div class="grid grid-cols-2 gap-6 mb-6">
+      <div>
+        <%= f.label :access_level, class: "block text-sm font-medium text-gray-700 mb-2" %>
+        <%= f.select :access_level, Resource::ACCESS_LEVELS, {}, class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-dada-primary focus:border-transparent" %>
+      </div>
+      <div class="flex items-center">
+        <%= f.check_box :featured, class: "w-4 h-4 text-dada-primary border-gray-300 rounded focus:ring-dada-primary" %>
+        <%= f.label :featured, "Featured resource (show on homepage)", class: "ml-2 text-sm text-gray-700" %>
+      </div>
+    </div>
+
+    <!-- Tags with Hierarchy -->
+    <div class="mb-6">
+      <label class="block text-sm font-medium text-gray-700 mb-2">Tags</label>
+      <select name="resource[tag_ids][]" multiple class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-dada-primary focus:border-transparent h-48">
+        <%= Tag.roots.order(:category, :name).each do |root| %>
+          <optgroup label="<%= root.name %>">
+            <% root.children.order(:name).each do |child| %>
+              <option value="<%= child.id %>" <%= @resource.tag_ids.include?(child.id) ? 'selected' : '' %>><%= child.name %></option>
+            <% end %>
+          </optgroup>
+        <% end %>
+      </select>
+      <p class="text-sm text-gray-500 mt-1">Hold Ctrl/Cmd to select multiple tags</p>
+    </div>
+
+    <!-- Submit -->
+    <div class="flex gap-4">
+      <button type="submit" class="bg-dada-primary text-white px-6 py-2 rounded-lg hover:bg-dada-accent">Save Resource</button>
+      <%= link_to "Cancel", admin_resources_path, class: "px-6 py-2 text-gray-600 hover:text-gray-900" %>
+    </div>
+  <% end %>
+</div>
+
+<script>
+// Content type tab switching
+function showContentTab(type) {
+  document.querySelectorAll('.content-tab').forEach(el => el.classList.add('hidden'));
+  document.getElementById('content-' + type).classList.remove('hidden');
+  
+  document.querySelectorAll('[id^="tab-"]').forEach(btn => {
+    btn.classList.remove('border-dada-primary', 'bg-dada-primary', 'text-white');
+    btn.classList.add('border-gray-300', 'text-gray-600');
+  });
+  document.getElementById('tab-' + type).classList.remove('border-gray-300', 'text-gray-600');
+  document.getElementById('tab-' + type).classList.add('border-dada-primary', 'bg-dada-primary', 'text-white');
+}
+
+// WYSIWYG formatting
+function formatDoc(cmd, value = null) {
+  if (value) {
+    document.execCommand(cmd, false, value);
+  } else {
+    document.execCommand(cmd);
+  }
+  document.getElementById('editor').focus();
+}
+
+// Video URL preview
+document.addEventListener('DOMContentLoaded', function() {
+  const videoInput = document.querySelector('input[name="resource[video_url]"]');
+  if (videoInput) {
+    videoInput.addEventListener('input', function() {
+      const url = this.value;
+      const preview = document.getElementById('video-preview');
+      const iframe = document.getElementById('video-iframe');
+      
+      if (url.includes('youtube.com') || url.includes('youtu.be')) {
+        let embedUrl = url.replace('watch?v=', 'embed/').replace('youtu.be/', 'www.youtube.com/embed/');
+        iframe.src = embedUrl;
+        preview.classList.remove('hidden');
+      } else if (url.includes('vimeo.com')) {
+        let embedUrl = url.replace('vimeo.com/', 'player.vimeo.com/video/');
+        iframe.src = embedUrl;
+        preview.classList.remove('hidden');
+      } else {
+        preview.classList.add('hidden');
+      }
+    });
+  }
+  
+  // Set initial tab based on resource type
+  <% if @resource.video_url.present? %>
+    showContentTab('video');
+  <% elsif @resource.resource_type == 'video' %>
+    showContentTab('video');
+  <% elsif @resource.resource_type == 'audio' %>
+    showContentTab('audio');
+  <% else %>
+    showContentTab('text');
+  <% end %>
+});
+
+// Copy editor content to hidden field on submit
+document.querySelector('form').addEventListener('submit', function() {
+  const editor = document.getElementById('editor');
+  const hiddenField = document.getElementById('content-hidden');
+  hiddenField.value = editor.innerHTML;
+});
+</script>

@@ -1,0 +1,28 @@
+<div class="max-w-4xl mx-auto px-4 py-8">
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-2xl font-bold text-dada-text dark:text-white">Admin: Resources</h1>
+    <%= link_to "New Resource", new_admin_resource_path, class: "bg-dada-primary text-white px-4 py-2 rounded hover:bg-dada-accent" %>
+  </div>
+
+  <table class="w-full bg-white dark:bg-zinc-800 rounded-lg">
+    <thead>
+      <tr class="border-b border-gray-200 dark:border-zinc-700">
+        <th class="text-left p-4 text-dada-text dark:text-white">Title</th>
+        <th class="text-left p-4 text-dada-text dark:text-white">Type</th>
+        <th class="text-left p-4 text-dada-text dark:text-white">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @resources.each do |resource| %>
+        <tr class="border-b border-gray-200 dark:border-zinc-700">
+          <td class="p-4 text-dada-text dark:text-white"><%= resource.title %></td>
+          <td class="p-4 text-dada-text dark:text-white"><%= resource.content_type %></td>
+          <td class="p-4">
+            <%= link_to "Edit", edit_admin_resource_path(resource), class: "text-dada-primary hover:underline mr-4" %>
+            <%= link_to "Delete", admin_resource_path(resource), method: :delete, data: { confirm: "Delete?" }, class: "text-red-600 hover:underline" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -1,4 +1,159 @@
-<div>
-  <h1 class="font-bold text-4xl">Web::Circles#show</h1>
-  <p>Find me in app/views/web/circles/show.html.erb</p>
+<div class="px-4 md:px-40 flex flex-1 justify-center py-5">
+  <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+    <div class="mb-6">
+      <a href="<%= circles_path %>" class="text-dada-primary hover:underline inline-flex items-center text-sm">
+        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+        All Circles
+      </a>
+    </div>
+
+    <div class="flex flex-wrap justify-between gap-3 p-4">
+      <div class="flex min-w-72 flex-col gap-3">
+        <div class="flex items-center gap-3">
+          <div class="w-14 h-14 rounded-full flex items-center justify-center" style="background-color: <%= @circle.color || '#E84D4D' %>20">
+            <svg class="w-7 h-7" style="color: <%= @circle.color || '#E84D4D' %>" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+            </svg>
+          </div>
+          <p class="text-[#181311] dark:text-white tracking-light text-3xl font-bold leading-tight"><%= @circle.name %></p>
+        </div>
+        <p class="text-[#886b63] dark:text-zinc-400 text-sm font-normal leading-normal">
+          <%= @circle.description %>
+        </p>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap gap-3 px-4 py-3">
+      <div class="flex min-w-[111px] flex-1 basis-[fit-content] flex-col gap-2 rounded-lg border border-[#e5dedc] dark:border-zinc-700 p-3 items-start">
+        <p class="text-[#181311] dark:text-white tracking-light text-2xl font-bold leading-tight"><%= @circle.topics.count %></p>
+        <div class="flex items-center gap-2">
+          <p class="text-[#886b63] dark:text-zinc-400 text-sm font-normal leading-normal">Discussions</p>
+        </div>
+      </div>
+      <div class="flex min-w-[111px] flex-1 basis-[fit-content] flex-col gap-2 rounded-lg border border-[#e5dedc] dark:border-zinc-700 p-3 items-start">
+        <p class="text-[#181311] dark:text-white tracking-light text-2xl font-bold leading-tight"><%= @circle.members.count %></p>
+        <div class="flex items-center gap-2">
+          <p class="text-[#886b63] dark:text-zinc-400 text-sm font-normal leading-normal">Members</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="pb-3">
+      <div class="flex border-b border-[#e5dedc] dark:border-zinc-700 px-4 gap-8">
+        <a href="<%= circle_path(@circle) %>" class="flex flex-col items-center justify-center border-b-[3px] <%= params[:tab].nil? || params[:tab] == 'discussions' ? 'border-b-[#181311] text-[#181311]' : 'border-b-transparent text-[#886b63]' %> dark:text-white pb-[13px] pt-4 hover:text-[#181311] transition">
+          <p class="text-sm font-bold leading-normal tracking-[0.015em]">Discussions</p>
+        </a>
+        <a href="<%= circle_path(@circle, tab: 'members') %>" class="flex flex-col items-center justify-center border-b-[3px] <%= params[:tab] == 'members' ? 'border-b-[#181311] text-[#181311]' : 'border-b-transparent text-[#886b63]' %> dark:text-white pb-[13px] pt-4 hover:text-[#181311] transition">
+          <p class="text-sm font-bold leading-normal tracking-[0.015em]">Members</p>
+        </a>
+        <a href="<%= circle_path(@circle, tab: 'about') %>" class="flex flex-col items-center justify-center border-b-[3px] <%= params[:tab] == 'about' ? 'border-b-[#181311] text-[#181311]' : 'border-b-transparent text-[#886b63]' %> dark:text-white pb-[13px] pt-4 hover:text-[#181311] transition">
+          <p class="text-sm font-bold leading-normal tracking-[0.015em]">About</p>
+        </a>
+      </div>
+    </div>
+
+    <% tab = params[:tab] %>
+    <% if tab.nil? || tab == 'discussions' %>
+      <h3 class="text-[#181311] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Recent Discussions</h3>
+
+      <% if @topics.any? %>
+        <% @topics.each do |topic| %>
+          <a href="<%= circle_topic_path(@circle, topic) %>" class="flex items-center gap-4 bg-white dark:bg-zinc-800 px-4 min-h-[72px] py-3 hover:bg-gray-50 dark:hover:bg-zinc-700 transition border-b border-[#e5dedc] dark:border-zinc-700">
+            <div class="bg-dada-primary/20 rounded-full h-12 w-12 flex items-center justify-center shrink-0">
+              <span class="text-dada-primary font-bold"><%= topic.anonymous? ? 'A' : (topic.user.name || topic.user.email).first.upcase %></span>
+            </div>
+            <div class="flex flex-col justify-center flex-1 overflow-hidden">
+              <div class="flex items-center gap-2 mb-1">
+                <% if topic.pinned? %>
+                  <span class="bg-dada-primary/20 text-dada-primary text-xs px-2 py-0.5 rounded-full font-medium">Pinned</span>
+                <% end %>
+                <% if topic.closed? %>
+                  <span class="bg-zinc-200 text-zinc-600 text-xs px-2 py-0.5 rounded-full">Closed</span>
+                <% end %>
+              </div>
+              <p class="text-[#181311] dark:text-white text-base font-medium leading-normal line-clamp-1"><%= topic.title %></p>
+              <p class="text-[#886b63] dark:text-zinc-400 text-sm font-normal leading-normal line-clamp-1">
+                By <%= topic.anonymous? ? 'Anonymous' : (topic.user.name || topic.user.email) %> · <%= time_ago_in_words(topic.created_at) %> ago · <%= topic.posts.count %> replies
+              </p>
+            </div>
+          </a>
+        <% end %>
+      <% else %>
+        <div class="flex items-center gap-4 bg-white dark:bg-zinc-800 px-4 py-8 justify-center">
+          <p class="text-[#886b63] dark:text-zinc-400">No discussions yet. Be the first to start one!</p>
+        </div>
+      <% end %>
+
+      <div class="flex px-4 py-3 justify-start">
+        <% if user_signed_in? %>
+          <a href="<%= new_topic_circle_path(@circle) %>" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-[#eb714c] text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-dada-accent transition">
+            <span class="truncate">Start a Discussion</span>
+          </a>
+        <% else %>
+          <a href="/users/sign_in" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-[#eb714c] text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-dada-accent transition">
+            <span class="truncate">Sign In to Start</span>
+          </a>
+        <% end %>
+      </div>
+
+    <% elsif tab == 'members' %>
+      <h3 class="text-[#181311] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Members (<%= @circle.members.count %>)</h3>
+
+      <% members = @circle.members %>
+      <% if members.any? %>
+        <% members.each do |member| %>
+          <div class="flex items-center gap-4 bg-white dark:bg-zinc-800 px-4 py-3 border-b border-[#e5dedc] dark:border-zinc-700">
+            <div class="bg-dada-primary/20 rounded-full h-12 w-12 flex items-center justify-center shrink-0">
+              <span class="text-dada-primary font-bold"><%= (member.name || member.email).first.upcase %></span>
+            </div>
+            <div class="flex flex-col justify-center flex-1">
+              <p class="text-[#181311] dark:text-white text-base font-medium"><%= member.name || member.email %></p>
+              <p class="text-[#886b63] dark:text-zinc-400 text-sm">Member since <%= member.created_at.strftime('%B %Y') %></p>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="flex items-center gap-4 bg-white dark:bg-zinc-800 px-4 py-8 justify-center">
+          <p class="text-[#886b63] dark:text-zinc-400">No members yet. Start a discussion to be the first!</p>
+        </div>
+      <% end %>
+
+    <% elsif tab == 'about' %>
+      <h3 class="text-[#181311] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">About</h3>
+
+      <div class="bg-white dark:bg-zinc-800 px-4 py-4">
+        <p class="text-[#181311] dark:text-white text-base leading-relaxed mb-4">
+          <%= @circle.description %>
+        </p>
+        <div class="flex items-center gap-4 pt-4 border-t border-[#e5dedc] dark:border-zinc-700">
+          <div class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-[#886b63]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+            </svg>
+            <span class="text-[#886b63] dark:text-zinc-400 text-sm"><%= @circle.members.count %> members</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <svg class="w-5 h-5 text-[#886b63]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+            </svg>
+            <span class="text-[#886b63] dark:text-zinc-400 text-sm"><%= @circle.topics.count %> discussions</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex px-4 py-3 justify-start">
+        <% if user_signed_in? %>
+          <a href="<%= new_topic_circle_path(@circle) %>" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-[#eb714c] text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-dada-accent transition">
+            <span class="truncate">Start a Discussion</span>
+          </a>
+        <% else %>
+          <a href="/users/sign_in" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-[#eb714c] text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-dada-accent transition">
+            <span class="truncate">Sign In to Start</span>
+          </a>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 </div>

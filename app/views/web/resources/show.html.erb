@@ -1,0 +1,19 @@
+<div class="max-w-4xl mx-auto px-4 py-8">
+  <a href="/resources" class="text-dada-primary hover:underline mb-4 inline-block">← Back to Resources</a>
+  
+  <% if @resource %>
+    <article>
+      <h1 class="text-3xl font-bold text-dada-text dark:text-white mb-4">
+        <%= @resource.title %>
+      </h1>
+      
+      <div class="prose dark:prose-invert max-w-none text-dada-text dark:text-zinc-300">
+        <%= @resource.content&.html_safe %>
+      </div>
+    </article>
+  <% else %>
+    <div class="text-center py-12">
+      <p class="text-dada-subtle">Resource not found.</p>
+    </div>
+  <% end %>
+</div>

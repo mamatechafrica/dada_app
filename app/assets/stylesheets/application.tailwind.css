@@ -1,3 +1,11 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-dada-primary: #E84D4D;
+  --color-dada-secondary: #FFB6A9;
+  --color-dada-text: #5E2A35;
+  --color-dada-background: #FFF5F3;
+  --color-dada-darkBg: #1a1a1a;
+  --color-dada-subtle: #8B6D73;
+  --color-dada-accent: #D63E3E;
+}

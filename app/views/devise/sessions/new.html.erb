@@ -8,10 +8,7 @@
         <%= f.email_field :email, autofocus: true, class: "mt-1 block w-full px-3 py-2 bg-white dark:bg-zinc-700 text-dada-text dark:text-white border border-gray-300 dark:border-zinc-600 rounded" %>
       </div>
 
-      <div class="mb-6">
-        <%= f.label :password, class: "block text-sm font-medium text-dada-text dark:text-white" %>
-        <%= f.password_field :password, autocomplete: "current-password", class: "mt-1 block w-full px-3 py-2 bg-white dark:bg-zinc-700 text-dada-text dark:text-white border border-gray-300 dark:border-zinc-600 rounded" %>
-      </div>
+      <%= render "devise/shared/password_field", f: f, field: :password, label_text: "Password", placeholder_text: "Enter your password", autocomplete: "current-password" %>
 
       <div class="flex justify-between items-center mb-6">
         <%= f.check_box :remember_me, class: "mr-1" %>

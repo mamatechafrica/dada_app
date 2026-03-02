@@ -1,0 +1,130 @@
+<div class="max-w-4xl mx-auto px-4 py-8">
+  <div class="mb-6">
+    <a href="<%= circle_path(@circle) %>" class="text-dada-primary hover:underline inline-flex items-center text-sm">
+      <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+      </svg>
+      Back to <%= @circle.name %>
+    </a>
+  </div>
+
+  <div class="bg-white dark:bg-zinc-800 rounded-xl shadow-sm border border-gray-100 dark:border-zinc-700 overflow-hidden mb-8">
+    <div class="p-6 border-b border-gray-100 dark:border-zinc-700">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-full bg-dada-primary/20 flex items-center justify-center">
+            <span class="text-dada-primary font-bold text-lg"><%= @topic.anonymous? ? 'A' : (@topic.user.name || @topic.user.email).first.upcase %></span>
+          </div>
+          <div>
+            <p class="font-bold text-dada-text dark:text-white">
+              <%= @topic.anonymous? ? 'Anonymous' : (@topic.user.name || @topic.user.email) %>
+            </p>
+            <p class="text-sm text-dada-subtle"><%= time_ago_in_words(@topic.created_at) %> ago</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <% if @topic.pinned? %>
+            <span class="bg-dada-primary/20 text-dada-primary text-xs px-2 py-1 rounded-full font-medium">Pinned</span>
+          <% end %>
+          <% if @topic.closed? %>
+            <span class="bg-zinc-200 text-zinc-600 text-xs px-2 py-1 rounded-full">Closed</span>
+          <% end %>
+        </div>
+      </div>
+      
+      <h1 class="text-2xl font-bold text-dada-text dark:text-white mb-4"><%= @topic.title %></h1>
+      
+      <div class="prose dark:prose-invert max-w-none">
+        <%= @topic.content %>
+      </div>
+    </div>
+    
+    <div class="px-6 py-4 bg-gray-50 dark:bg-zinc-900 flex items-center justify-between">
+      <div class="flex items-center gap-6">
+        <button class="flex items-center gap-2 text-dada-subtle hover:text-dada-primary transition">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+            <path d="M178,32c-20.65,0-38.73,8.88-50,23.89C116.73,40.88,98.65,32,78,32A62.07,62.07,0,0,0,16,94c0,70,103.79,126.66,108.21,129a8,8,0,0,0,7.58,0C136.21,220.66,240,164,240,94A62.07,62.07,0,0,0,178,32Z"></path>
+          </svg>
+          <span class="text-sm font-medium">Like</span>
+        </button>
+        <div class="flex items-center gap-2 text-dada-subtle">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+            <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM84,116a12,12,0,1,0,12,12A12,12,0,0,0,84,116Zm88,0a12,12,0,1,0,12,12A12,12,0,0,0,172,116Z"></path>
+          </svg>
+          <span class="text-sm font-medium"><%= @posts.count %> comments</span>
+        </div>
+      </div>
+      <button class="flex items-center gap-2 text-dada-subtle hover:text-dada-primary transition">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+          <path d="M227.32,28.68a16,16,0,0,0-15.66-4.08l-.15,0L19.57,82.84a16,16,0,0,0-2.42,29.84l85.62,40.55,40.55,85.62A15.86,15.86,0,0,0,157.74,248q.69,0,1.38-.06a15.88,15.88,0,0,0,14-11.51l58.2-191.94c0-.05,0-.1,0-.15A16,16,0,0,0,227.32,28.68Z"></path>
+        </svg>
+        <span class="text-sm font-medium">Share</span>
+      </button>
+    </div>
+  </div>
+
+  <h3 class="text-lg font-bold text-dada-text dark:text-white mb-4">Comments (<%= @posts.count %>)</h3>
+
+  <div class="space-y-4 mb-8">
+    <% if @posts.any? %>
+      <% @posts.each do |post| %>
+        <div class="bg-white dark:bg-zinc-800 rounded-lg shadow-sm border border-gray-100 dark:border-zinc-700 p-4">
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-full bg-dada-primary/20 flex items-center justify-center shrink-0">
+              <span class="text-dada-primary font-medium"><%= post.anonymous? ? 'A' : (post.user.name || post.user.email).first.upcase %></span>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="font-medium text-dada-text dark:text-white">
+                  <%= post.anonymous? ? 'Anonymous' : (post.user.name || post.user.email) %>
+                </span>
+                <span class="text-dada-subtle text-sm">·</span>
+                <span class="text-dada-subtle text-sm"><%= time_ago_in_words(post.created_at) %> ago</span>
+              </div>
+              <p class="text-dada-text dark:text-white"><%= post.content %></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="text-center py-8 bg-gray-50 dark:bg-zinc-800 rounded-lg">
+        <p class="text-dada-subtle">No comments yet. Be the first to comment!</p>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @topic.closed? %>
+    <div class="bg-gray-100 dark:bg-zinc-800 rounded-lg p-6 text-center">
+      <p class="text-dada-subtle">This topic is closed and no longer accepting comments.</p>
+    </div>
+  <% elsif user_signed_in? %>
+    <div class="bg-white dark:bg-zinc-800 rounded-lg shadow-sm border border-gray-100 dark:border-zinc-700 p-4">
+      <div class="flex items-start gap-3">
+        <div class="w-10 h-10 rounded-full bg-dada-primary/20 flex items-center justify-center shrink-0">
+          <span class="text-dada-primary font-medium"><%= (current_user.name || current_user.email).first.upcase %></span>
+        </div>
+        <div class="flex-1">
+          <%= form_with url: circle_topic_reply_path(@circle, @topic), local: true do |f| %>
+            <div class="mb-3">
+              <%= f.text_area :content, rows: 3, class: "w-full px-4 py-2 border border-gray-200 dark:border-zinc-600 rounded-lg bg-gray-50 dark:bg-zinc-700 text-dada-text dark:text-white focus:ring-2 focus:ring-dada-primary focus:border-transparent", placeholder: "Write a comment...", required: true %>
+            </div>
+            <div class="flex items-center justify-between">
+              <label class="flex items-center gap-2 text-sm text-dada-subtle cursor-pointer">
+                <%= f.check_box :anonymous, class: "rounded border-gray-300 text-dada-primary focus:ring-dada-primary" %>
+                Post anonymously
+              </label>
+              <%= f.submit "Post Comment", class: "bg-dada-primary text-white px-6 py-2 rounded-lg font-medium hover:bg-dada-accent transition cursor-pointer" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <div class="bg-gray-50 dark:bg-zinc-800 rounded-lg p-6 text-center">
+      <p class="text-dada-subtle mb-4">Join the conversation to post a comment</p>
+      <a href="/users/sign_in" class="inline-block bg-dada-primary text-white px-6 py-2 rounded-lg font-medium hover:bg-dada-accent transition">
+        Sign In to Comment
+      </a>
+    </div>
+  <% end %>
+</div>
