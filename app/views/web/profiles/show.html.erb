@@ -1,65 +1,220 @@
-<div class="min-h-screen bg-dada-background dark:bg-dada-darkBg p-4">
+<div class="min-h-screen bg-gray-50 dark:bg-zinc-900 p-4 md:p-8">
   <div class="max-w-4xl mx-auto">
-    <div class="bg-white dark:bg-zinc-800 shadow-md rounded-lg p-6 mb-8">
-      <h2 class="text-2xl font-bold text-dada-text dark:text-white mb-4">My Shares</h2>
+    
+    <!-- Tabs -->
+    <div class="flex border-b border-gray-200 dark:border-zinc-700 mb-6">
+      <button id="tab-profile" onclick="switchTab('profile')" class="px-6 py-3 text-dada-primary border-b-2 border-dada-primary font-medium">
+        Profile
+      </button>
+      <button id="tab-settings" onclick="switchTab('settings')" class="px-6 py-3 text-gray-500 dark:text-zinc-400 hover:text-dada-primary font-medium">
+        Settings
+      </button>
+    </div>
 
-      <%= link_to "New Share", new_web_share_path,
-                  class: "mb-4 inline-block bg-dada-primary hover:bg-dada-accent text-white font-semibold px-4 py-2 rounded" %>
+    <!-- Profile Tab -->
+    <div id="content-profile" class="tab-content">
+      <div class="bg-white dark:bg-zinc-800 rounded-xl shadow-sm p-6 md:p-8">
+        <%= form_with(model: @user, url: web_profile_path, method: :patch, local: true) do |f| %>
+          <div class="flex flex-col md:flex-row items-start md:items-center gap-6 mb-8">
+            <!-- Profile Photo -->
+            <div class="relative">
+              <% if @user.profile_photo.attached? && @user.profile_photo.representable? %>
+                <%= image_tag @user.profile_photo, alt: "Profile Photo", class: "w-24 h-24 rounded-full object-cover" %>
+              <% else %>
+                <div class="w-24 h-24 rounded-full bg-dada-primary/20 flex items-center justify-center">
+                  <span class="text-dada-primary font-bold text-4xl"><%= (@user.name || @user.email).first.upcase %></span>
+                </div>
+              <% end %>
+            </div>
+            
+            <div class="flex-1">
+              <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white"><%= @user.name || "Your Name" %></h1>
+              <p class="text-gray-500 dark:text-zinc-400"><%= @user.email %></p>
+            </div>
+            
+            <%= f.submit "Save Changes", class: "bg-dada-primary hover:bg-dada-accent text-white font-semibold px-6 py-2 rounded-lg transition cursor-pointer" %>
+          </div>
 
-      <div class="space-y-6">
-        <% @shares.each do |share| %>
-          <div class="bg-white dark:bg-zinc-700 shadow rounded-lg p-4">
-            <div class="flex justify-between items-center mb-2">
-              <span class="text-sm text-dada-subtle dark:text-zinc-400">
-                <%= share.created_at.strftime("%b %d, %Y") %>
-              </span>
+          <!-- Profile Photo Upload -->
+          <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-700 dark:text-zinc-300 mb-2">Profile Photo</label>
+            <div class="flex items-center gap-4">
+              <%= f.file_field :profile_photo, accept: "image/*", class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-dada-primary file:text-white hover:file:bg-dada-accent" %>
+            </div>
+          </div>
 
-              <div class="space-x-2">
-                <%= link_to "Edit", edit_web_share_path(share),
-                            class: "text-dada-primary hover:underline text-sm" %>
-                <%= link_to "Delete", web_share_path(share),
-                            method: :delete,
-                            data: { confirm: "Are you sure?" },
-                            class: "text-red-500 hover:underline text-sm" %>
+          <!-- Basic Info -->
+          <div class="border-t border-gray-200 dark:border-zinc-700 pt-6">
+            <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Edit Information</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-zinc-300 mb-1">Name</label>
+                <%= f.text_field :name, class: "w-full px-4 py-2 border border-gray-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-700 text-gray-900 dark:text-white" %>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-zinc-300 mb-1">Country</label>
+                <%= f.select :country, 
+                  options_for_select([
+                    "Algeria", "Angola", "Benin", "Botswana", "Burkina Faso", "Burundi",
+                    "Cabo Verde", "Cameroon", "Central African Republic", "Chad", "Comoros",
+                    "Congo (Brazzaville)", "Congo (Kinshasa)", "Djibouti", "Egypt", "Equatorial Guinea",
+                    "Eritrea", "Eswatini", "Ethiopia", "Gabon", "Gambia", "Ghana", "Guinea",
+                    "Guinea-Bissau", "Ivory Coast", "Kenya", "Lesotho", "Liberia", "Libya",
+                    "Madagascar", "Malawi", "Mali", "Mauritania", "Mauritius", "Morocco",
+                    "Mozambique", "Namibia", "Niger", "Nigeria", "Rwanda",
+                    "Sao Tome & Principe", "Senegal", "Seychelles", "Sierra Leone", "Somalia",
+                    "South Africa", "South Sudan", "Sudan", "Tanzania", "Togo", "Tunisia",
+                    "Uganda", "Zambia", "Zimbabwe", "Other"
+                  ], @user.country), 
+                  { include_blank: "Select country" }, 
+                  class: "w-full px-4 py-2 border border-gray-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-700 text-gray-900 dark:text-white" %>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-zinc-300 mb-1">Menopause Stage</label>
+                <%= f.select :stage, options_for_select(["Perimenopause", "Menopause", "Post-menopause", "Not sure", "Ally"], @user.stage), { include_blank: "Select stage" }, class: "w-full px-4 py-2 border border-gray-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-700 text-gray-900 dark:text-white" %>
               </div>
             </div>
-
-            <!-- ✅ FIXED: use share.share_type instead of share.type -->
-            <h3 class="text-lg font-semibold text-dada-text dark:text-white">
-              <%= share.title.presence || share.share_type.capitalize %>
-            </h3>
-
-            <!-- ✅ FIXED: handle nil visibility safely -->
-            <p class="text-dada-subtle dark:text-zinc-400 mb-2">
-              Visibility:
-              <%= share.visibility&.capitalize || "Unknown" %>
-            </p>
-
-            <!-- ✅ Simplified content rendering -->
-            <% if share.share_type == "text" %>
-              <p class="text-dada-text dark:text-zinc-200"><%= share.content.to_s.truncate(200) %></p>
-
-            <% elsif share.share_type == "image" %>
-              <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                <% (share.image_urls || "").split(",").each do |img| %>
-                  <img src="<%= img.strip %>"
-                       class="w-full h-32 object-cover rounded"
-                       alt="Shared image">
+            
+            <div class="mt-4">
+              <label class="block text-sm font-medium text-gray-700 dark:text-zinc-300 mb-2">Symptoms</label>
+              <div class="flex flex-wrap gap-2">
+                <% ["Hot flashes", "Trouble sleeping", "Mood changes", "Anxiety", "Brain fog", "Irregular periods", "Vaginal dryness", "Low libido", "Weight changes", "Not sure"].each do |symptom| %>
+                  <button type="button" 
+                          data-symptom="<%= symptom %>"
+                          class="symptom-btn px-3 py-1 rounded-full text-sm border transition <%= @user.symptoms_array.include?(symptom) ? 'bg-dada-primary text-white border-dada-primary' : 'bg-gray-100 text-gray-700 border-gray-300 hover:border-dada-primary' %>">
+                    <%= symptom %>
+                  </button>
                 <% end %>
               </div>
-
-            <% elsif share.share_type == "video" %>
-              <div class="aspect-w-16 aspect-h-9">
-                <iframe src="<%= share.video_url %>"
-                        class="w-full h-full rounded"
-                        frameborder="0"
-                        allowfullscreen></iframe>
-              </div>
-            <% end %>
-
+              <%= hidden_field_tag "user[symptoms]", @user.symptoms, id: "symptoms-hidden" %>
+            </div>
           </div>
         <% end %>
       </div>
+
+      <!-- User Shares -->
+      <div class="bg-white dark:bg-zinc-800 rounded-xl shadow-sm p-6 md:p-8 mt-6">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-xl font-bold text-gray-900 dark:text-white">My Shares</h2>
+          <%= link_to "New Share", new_web_share_path,
+                      class: "bg-dada-primary hover:bg-dada-accent text-white font-semibold px-4 py-2 rounded-lg transition" %>
+        </div>
+
+        <div class="space-y-4">
+          <% if @shares.any? %>
+            <% @shares.each do |share| %>
+              <div class="border border-gray-200 dark:border-zinc-700 rounded-lg p-4 hover:shadow-md transition">
+                <div class="flex justify-between items-start mb-2">
+                  <span class="text-sm text-gray-500">
+                    <%= share.created_at.strftime("%b %d, %Y") %>
+                  </span>
+                  <div class="flex gap-3">
+                    <%= link_to "Edit", edit_web_share_path(share), class: "text-dada-primary hover:underline text-sm" %>
+                    <%= link_to "Delete", web_share_path(share), method: :delete, data: { confirm: "Are you sure?" }, class: "text-red-500 hover:underline text-sm" %>
+                  </div>
+                </div>
+                <h3 class="font-semibold text-gray-900 dark:text-white"><%= share.title.presence || share.share_type.capitalize %></h3>
+                <p class="text-sm text-gray-500 mt-1">Visibility: <%= share.visibility&.capitalize || "Unknown" %></p>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="text-gray-500 dark:text-zinc-400 text-center py-8">You haven't shared anything yet.</p>
+          <% end %>
+        </div>
+      </div>
     </div>
+
+    <!-- Settings Tab -->
+    <div id="content-settings" class="tab-content hidden">
+      <div class="bg-white dark:bg-zinc-800 rounded-xl shadow-sm p-6 md:p-8">
+        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-6">Account Settings</h2>
+        
+        <!-- Change Password -->
+        <div class="mb-8">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Change Password</h3>
+          <%= form_with(model: @user, url: user_registration_path, method: :put, local: true) do |f| %>
+            <div class="space-y-4 max-w-md">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-zinc-300 mb-1">Current Password</label>
+                <%= f.password_field :current_password, class: "w-full px-4 py-2 border border-gray-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-700 text-gray-900 dark:text-white", required: true %>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-zinc-300 mb-1">New Password</label>
+                <%= f.password_field :password, class: "w-full px-4 py-2 border border-gray-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-700 text-gray-900 dark:text-white", placeholder: "Leave blank if you don't want to change" %>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-zinc-300 mb-1">Confirm New Password</label>
+                <%= f.password_field :password_confirmation, class: "w-full px-4 py-2 border border-gray-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-700 text-gray-900 dark:text-white" %>
+              </div>
+              <%= f.submit "Update Password", class: "bg-dada-primary hover:bg-dada-accent text-white font-semibold px-6 py-2 rounded-lg transition cursor-pointer" %>
+            </div>
+          <% end %>
+        </div>
+
+        <!-- Deactivate/Delete Account -->
+        <div class="border-t border-gray-200 dark:border-zinc-700 pt-6">
+          <h3 class="text-lg font-semibold text-red-600 mb-4">Danger Zone</h3>
+          
+          <div class="space-y-4">
+            <div class="flex items-center justify-between p-4 bg-red-50 dark:bg-red-900/20 rounded-lg">
+              <div>
+                <p class="font-medium text-gray-900 dark:text-white">Deactivate Account</p>
+                <p class="text-sm text-gray-500">Your profile will be hidden but data preserved</p>
+              </div>
+              <button class="px-4 py-2 border border-red-500 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition">
+                Deactivate
+              </button>
+            </div>
+            
+            <div class="flex items-center justify-between p-4 bg-red-50 dark:bg-red-900/20 rounded-lg">
+              <div>
+                <p class="font-medium text-gray-900 dark:text-white">Delete Account</p>
+                <p class="text-sm text-gray-500">Permanently delete your account and all data</p>
+              </div>
+              <%= button_to "Delete Account", user_registration_path(@user), method: :delete, data: { confirm: "Are you sure? This cannot be undone." }, class: "px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
+
+<script>
+  function switchTab(tab) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+    document.getElementById('content-' + tab).classList.remove('hidden');
+    
+    document.getElementById('tab-profile').classList.remove('text-dada-primary', 'border-b-2', 'border-dada-primary');
+    document.getElementById('tab-profile').classList.add('text-gray-500');
+    document.getElementById('tab-settings').classList.remove('text-dada-primary', 'border-b-2', 'border-dada-primary');
+    document.getElementById('tab-settings').classList.add('text-gray-500');
+    
+    document.getElementById('tab-' + tab).classList.add('text-dada-primary', 'border-b-2', 'border-dada-primary');
+    document.getElementById('tab-' + tab).classList.remove('text-gray-500');
+  }
+
+  // Symptom buttons toggle
+  document.querySelectorAll('.symptom-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      this.classList.toggle('bg-dada-primary');
+      this.classList.toggle('text-white');
+      this.classList.toggle('border-dada-primary');
+      this.classList.toggle('bg-gray-100');
+      
+      updateSymptomsHidden();
+    });
+  });
+
+  function updateSymptomsHidden() {
+    const selected = [];
+    document.querySelectorAll('.symptom-btn.bg-dada-primary').forEach(btn => {
+      selected.push(btn.dataset.symptom);
+    });
+    document.getElementById('symptoms-hidden').value = selected.join(',');
+  }
+</script>

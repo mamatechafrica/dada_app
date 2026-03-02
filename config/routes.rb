@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     post "onboarding/submit", to: "onboarding#submit"
     get "theme_preview", to: "theme_preview#index"
     get "/profile", to: "profiles#show", as: :profile
+    patch "/profile", to: "profiles#update"
     get "chatbot", to: "chatbot#index", as: :chatbot
 
     resources :shares do
